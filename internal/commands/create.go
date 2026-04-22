@@ -63,6 +63,7 @@ var createCmd = &cobra.Command{
 
 		b := &bean.Bean{
 			Title:     title,
+			Slug:      bean.Slugify(title),
 			Status:    status,
 			Type:      beanType,
 			Priority:  createPriority,
