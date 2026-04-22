@@ -1,42 +1,40 @@
 package commands
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"sort"
 
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/beangraph"
-	"github.com/hmans/beans/pkg/beangraph/model"
-	"github.com/hmans/beans/pkg/config"
 	"github.com/hmans/beans/internal/output"
 	"github.com/hmans/beans/internal/ui"
+	"github.com/hmans/beans/pkg/bean"
+	"github.com/hmans/beans/pkg/beancore"
+	"github.com/hmans/beans/pkg/config"
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 )
 
 var (
-	listJSON       bool
-	listSearch     string
-	listStatus     []string
-	listNoStatus   []string
-	listType       []string
-	listNoType     []string
-	listPriority   []string
-	listNoPriority []string
-	listTag        []string
-	listNoTag      []string
+	listJSON        bool
+	listSearch      string
+	listStatus      []string
+	listNoStatus    []string
+	listType        []string
+	listNoType      []string
+	listPriority    []string
+	listNoPriority  []string
+	listTag         []string
+	listNoTag       []string
 	listHasParent   bool
 	listNoParent    bool
 	listParentID    string
 	listHasBlocking bool
 	listNoBlocking  bool
 	listIsBlocked   bool
-	listReady      bool
-	listQuiet      bool
-	listSort       string
-	listFull       bool
+	listReady       bool
+	listQuiet       bool
+	listSort        string
+	listFull        bool
 )
 
 var listCmd = &cobra.Command{
@@ -59,8 +57,7 @@ Search Syntax (--search/-S):
   title:login    Search only in title field
   body:auth      Search only in body field`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		// Build GraphQL filter from CLI flags
-		filter := &model.BeanFilter{
+		filter := &beancore.Filter{
 			Status:          listStatus,
 			ExcludeStatus:   listNoStatus,
 			Type:            listType,
@@ -71,12 +68,10 @@ Search Syntax (--search/-S):
 			ExcludeTags:     listNoTag,
 		}
 
-		// Add search filter if provided
 		if listSearch != "" {
 			filter.Search = &listSearch
 		}
 
-		// Add parent/blocks filters
 		if listHasParent {
 			filter.HasParent = &listHasParent
 		}
@@ -92,7 +87,7 @@ Search Syntax (--search/-S):
 		if listNoBlocking {
 			filter.NoBlocking = &listNoBlocking
 		}
-		// --ready and --is-blocked are mutually exclusive
+
 		if listReady && listIsBlocked {
 			return fmt.Errorf("--ready and --is-blocked are mutually exclusive")
 		}
@@ -101,8 +96,6 @@ Search Syntax (--search/-S):
 			filter.IsBlocked = &listIsBlocked
 		}
 
-		// --ready: beans available to start (not blocked, excludes in-progress/completed/scrapped/draft,
-		// and excludes beans with implicit terminal status from a scrapped/completed ancestor)
 		if listReady {
 			isBlocked := false
 			excludeImplicitTerminal := true
@@ -111,17 +104,13 @@ Search Syntax (--search/-S):
 			filter.ExcludeImplicitTerminal = &excludeImplicitTerminal
 		}
 
-		// Execute query via core resolver
-		resolver := &beangraph.CoreResolver{Core: core}
-		beans, err := resolver.Beans(context.Background(), filter)
+		beans, err := core.FilteredBeans(filter)
 		if err != nil {
 			return fmt.Errorf("querying beans: %w", err)
 		}
 
-		// Sort beans
 		sortBeans(beans, listSort, cfg)
 
-		// JSON output (flat list)
 		if listJSON {
 			if !listFull {
 				for _, b := range beans {
@@ -131,7 +120,6 @@ Search Syntax (--search/-S):
 			return output.SuccessMultiple(beans)
 		}
 
-		// Quiet mode: just IDs (flat)
 		if listQuiet {
 			for _, b := range beans {
 				fmt.Println(b.ID)
@@ -139,14 +127,8 @@ Search Syntax (--search/-S):
 			return nil
 		}
 
-		// Default: tree view
-		// We need all beans to find ancestors for context
-		allBeans, err := resolver.Beans(context.Background(), nil)
-		if err != nil {
-			return fmt.Errorf("querying all beans for tree: %w", err)
-		}
+		allBeans := core.All()
 
-		// Pre-compute implicit statuses for all beans
 		implicitStatuses := make(map[string]string, len(allBeans))
 		for _, b := range allBeans {
 			if status, _ := core.ImplicitStatus(b.ID); status != "" {
@@ -154,12 +136,10 @@ Search Syntax (--search/-S):
 			}
 		}
 
-		// Create sort function for tree building
 		sortFn := func(b []*bean.Bean) {
 			sortBeans(b, listSort, cfg)
 		}
 
-		// Build tree
 		tree := ui.BuildTree(beans, allBeans, sortFn, implicitStatuses)
 
 		if len(tree) == 0 {
@@ -167,7 +147,6 @@ Search Syntax (--search/-S):
 			return nil
 		}
 
-		// Calculate max ID width from all beans in tree
 		maxIDWidth := 2
 		for _, b := range allBeans {
 			if len(b.ID) > maxIDWidth {
@@ -176,7 +155,6 @@ Search Syntax (--search/-S):
 		}
 		maxIDWidth += 2
 
-		// Check if any beans have tags
 		hasTags := false
 		for _, b := range beans {
 			if len(b.Tags) > 0 {
@@ -185,7 +163,6 @@ Search Syntax (--search/-S):
 			}
 		}
 
-		// Detect terminal width (default to 80 if not a terminal)
 		termWidth := 80
 		if w, _, err := term.GetSize(int(os.Stdout.Fd())); err == nil && w > 0 {
 			termWidth = w
@@ -229,7 +206,6 @@ func sortBeans(beans []*bean.Bean, sortBy string, cfg *config.Config) {
 			return beans[i].UpdatedAt.After(*beans[j].UpdatedAt)
 		})
 	case "status":
-		// Build status order from configured statuses
 		statusOrder := make(map[string]int)
 		for i, s := range statusNames {
 			statusOrder[s] = i
@@ -242,12 +218,10 @@ func sortBeans(beans []*bean.Bean, sortBy string, cfg *config.Config) {
 			return beans[i].ID < beans[j].ID
 		})
 	case "priority":
-		// Build priority order from configured priorities
 		priorityOrder := make(map[string]int)
 		for i, p := range priorityNames {
 			priorityOrder[p] = i
 		}
-		// Find normal priority index for beans without priority
 		normalIdx := len(priorityNames)
 		for i, p := range priorityNames {
 			if p == "normal" {
@@ -278,7 +252,6 @@ func sortBeans(beans []*bean.Bean, sortBy string, cfg *config.Config) {
 			return beans[i].ID < beans[j].ID
 		})
 	default:
-		// Default: sort by status order, then priority, then type order, then title (same as TUI)
 		bean.SortByStatusPriorityAndType(beans, statusNames, priorityNames, typeNames)
 	}
 }

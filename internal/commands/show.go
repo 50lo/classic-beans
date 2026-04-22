@@ -1,16 +1,14 @@
 package commands
 
 import (
-	"context"
 	"fmt"
 	"strings"
 
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/beangraph"
 	"github.com/hmans/beans/internal/output"
 	"github.com/hmans/beans/internal/ui"
+	"github.com/hmans/beans/pkg/bean"
 	"github.com/spf13/cobra"
 )
 
@@ -27,28 +25,18 @@ var showCmd = &cobra.Command{
 	Long:  `Displays the full contents of one or more beans, including front matter and body.`,
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		resolver := &beangraph.CoreResolver{Core: core}
-
-		// Collect all beans
 		var beans []*bean.Bean
 		for _, id := range args {
-			b, err := resolver.Bean(context.Background(), id)
+			b, err := core.Get(id)
 			if err != nil {
 				if showJSON {
 					return output.Error(output.ErrNotFound, err.Error())
 				}
 				return fmt.Errorf("failed to find bean: %w", err)
 			}
-			if b == nil {
-				if showJSON {
-					return output.Error(output.ErrNotFound, fmt.Sprintf("bean not found: %s", id))
-				}
-				return fmt.Errorf("bean not found: %s", id)
-			}
 			beans = append(beans, b)
 		}
 
-		// JSON output
 		if showJSON {
 			if len(beans) == 1 {
 				return output.SuccessSingle(beans[0])
@@ -56,7 +44,6 @@ var showCmd = &cobra.Command{
 			return output.SuccessMultiple(beans)
 		}
 
-		// Raw markdown output (frontmatter + body)
 		if showRaw {
 			for i, b := range beans {
 				if i > 0 {
@@ -71,7 +58,6 @@ var showCmd = &cobra.Command{
 			return nil
 		}
 
-		// Body only (no header, no styling)
 		if showBodyOnly {
 			for i, b := range beans {
 				if i > 0 {
@@ -82,7 +68,6 @@ var showCmd = &cobra.Command{
 			return nil
 		}
 
-		// ETag only (for easy extraction in scripts)
 		if showETagOnly {
 			for i, b := range beans {
 				if i > 0 {
@@ -93,7 +78,6 @@ var showCmd = &cobra.Command{
 			return nil
 		}
 
-		// Default: styled human-friendly output
 		for i, b := range beans {
 			if i > 0 {
 				fmt.Println()
@@ -107,7 +91,6 @@ var showCmd = &cobra.Command{
 	},
 }
 
-// showStyledBean displays a single bean with styled output.
 func showStyledBean(b *bean.Bean) {
 	statusCfg := cfg.GetStatus(b.Status)
 	statusColor := "gray"
@@ -125,7 +108,6 @@ func showStyledBean(b *bean.Bean) {
 		header.WriteString(ui.Muted.Render("↑" + implicitStatus + " (from " + implicitStatusFrom + ")"))
 	}
 
-	// Display type
 	if b.Type != "" {
 		typeCfg := cfg.GetType(b.Type)
 		typeColor := "gray"
@@ -151,16 +133,15 @@ func showStyledBean(b *bean.Bean) {
 	}
 	if b.CreatedAt != nil {
 		header.WriteString("  ")
-		header.WriteString(ui.Muted.Render("created "+b.CreatedAt.Format("2006-01-02 15:04 UTC")))
+		header.WriteString(ui.Muted.Render("created " + b.CreatedAt.Format("2006-01-02 15:04 UTC")))
 	}
 	if b.UpdatedAt != nil {
 		header.WriteString("  ")
-		header.WriteString(ui.Muted.Render("updated "+b.UpdatedAt.Format("2006-01-02 15:04 UTC")))
+		header.WriteString(ui.Muted.Render("updated " + b.UpdatedAt.Format("2006-01-02 15:04 UTC")))
 	}
 	header.WriteString("\n")
 	header.WriteString(ui.Title.Render(b.Title))
 
-	// Display relationships
 	if b.Parent != "" || len(b.Blocking) > 0 {
 		header.WriteString("\n")
 		header.WriteString(ui.Muted.Render(strings.Repeat("─", 50)))
@@ -177,7 +158,6 @@ func showStyledBean(b *bean.Bean) {
 
 	fmt.Println(headerBox)
 
-	// Render the body with Glamour
 	if b.Body != "" {
 		renderer, err := glamour.NewTermRenderer(
 			glamour.WithAutoStyle(),
@@ -198,18 +178,15 @@ func showStyledBean(b *bean.Bean) {
 	}
 }
 
-// formatRelationships formats parent and blocks for display.
 func formatRelationships(b *bean.Bean) string {
 	var parts []string
 
-	// Display parent
 	if b.Parent != "" {
 		parts = append(parts, fmt.Sprintf("%s %s",
 			ui.Muted.Render("parent:"),
 			ui.ID.Render(b.Parent)))
 	}
 
-	// Display blocking
 	for _, target := range b.Blocking {
 		parts = append(parts, fmt.Sprintf("%s %s",
 			ui.Muted.Render("blocking:"),

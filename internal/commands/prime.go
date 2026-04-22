@@ -5,19 +5,17 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/spf13/cobra"
 	"github.com/hmans/beans/pkg/config"
+	"github.com/spf13/cobra"
 )
 
 //go:embed prompt.tmpl
 var agentPromptTemplate string
 
-// promptData holds all data needed to render the prompt template.
 type promptData struct {
-	GraphQLSchema string
-	Types         []config.TypeConfig
-	Statuses      []config.StatusConfig
-	Priorities    []config.PriorityConfig
+	Types      []config.TypeConfig
+	Statuses   []config.StatusConfig
+	Priorities []config.PriorityConfig
 }
 
 var primeCmd = &cobra.Command{
@@ -26,16 +24,13 @@ var primeCmd = &cobra.Command{
 	Long:  `Outputs a prompt that primes AI coding agents on how to use the beans CLI to manage project issues.`,
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		// If no explicit path given, check if a beans project exists by searching
-		// upward for a .beans.yml config file
 		if beansPath == "" && configPath == "" {
 			cwd, err := os.Getwd()
 			if err != nil {
-				return nil // Silently exit on error
+				return nil
 			}
 			configFile, err := config.FindConfig(cwd)
 			if err != nil || configFile == "" {
-				// No config file found - silently exit
 				return nil
 			}
 		}
@@ -46,10 +41,9 @@ var primeCmd = &cobra.Command{
 		}
 
 		data := promptData{
-			GraphQLSchema: GetGraphQLSchema(),
-			Types:         config.DefaultTypes,
-			Statuses:      config.DefaultStatuses,
-			Priorities:    config.DefaultPriorities,
+			Types:      config.DefaultTypes,
+			Statuses:   config.DefaultStatuses,
+			Priorities: config.DefaultPriorities,
 		}
 
 		return tmpl.Execute(os.Stdout, data)

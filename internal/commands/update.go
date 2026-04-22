@@ -1,18 +1,15 @@
 package commands
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"strings"
 
+	"github.com/hmans/beans/internal/output"
+	"github.com/hmans/beans/internal/ui"
 	"github.com/hmans/beans/pkg/bean"
 	"github.com/hmans/beans/pkg/beancore"
 	"github.com/hmans/beans/pkg/config"
-	"github.com/hmans/beans/pkg/beangraph"
-	"github.com/hmans/beans/pkg/beangraph/model"
-	"github.com/hmans/beans/internal/output"
-	"github.com/hmans/beans/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -45,67 +42,45 @@ var updateCmd = &cobra.Command{
 	Long:    `Updates one or more properties of an existing bean.`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-		resolver := &beangraph.CoreResolver{Core: core}
-
-		// Find the bean
-		b, err := resolver.Bean(ctx, args[0])
+		b, err := core.Get(args[0])
 		if err != nil {
 			return cmdError(updateJSON, output.ErrNotFound, "failed to find bean: %v", err)
 		}
 
-		// If not found, check the archive and unarchive if present
 		wasArchived := false
 		if b == nil {
 			unarchived, unarchiveErr := core.LoadAndUnarchive(args[0])
 			if unarchiveErr != nil {
 				return cmdError(updateJSON, output.ErrNotFound, "bean not found: %s", args[0])
 			}
-			// Re-query to get the model.Bean
-			b, err = resolver.Bean(ctx, unarchived.ID)
-			if err != nil || b == nil {
-				return cmdError(updateJSON, output.ErrNotFound, "bean not found: %s", args[0])
-			}
+			b = unarchived
 			wasArchived = true
 		}
 
-		// Track changes for output
 		var changes []string
 
-		// Prepare ifMatch for GraphQL mutations
 		var ifMatch *string
 		if updateIfMatch != "" {
 			ifMatch = &updateIfMatch
 		}
 
-		// Build and validate field updates
-		input, fieldChanges, err := buildUpdateInput(cmd, b.Tags, b.Body)
+		changed, fieldChanges, err := applyFieldUpdates(cmd, b)
 		if err != nil {
 			return cmdError(updateJSON, output.ErrValidation, "%s", err)
 		}
 		changes = append(changes, fieldChanges...)
 
-		// Add ifMatch to input if provided
-		if ifMatch != nil {
-			input.IfMatch = ifMatch
-		}
-
-		// Apply all updates atomically via single UpdateBean mutation
-		// This includes field updates, body modifications, and relationship changes
-		if hasFieldUpdates(input) {
-			b, err = resolver.UpdateBean(ctx, b.ID, input)
-			if err != nil {
+		if changed {
+			if err := core.Update(b, ifMatch); err != nil {
 				return mutationError(updateJSON, err)
 			}
 		}
 
-		// Require at least one change
 		if len(changes) == 0 {
 			return cmdError(updateJSON, output.ErrValidation,
 				"no changes specified (use --status, --type, --priority, --title, --body, --parent, --blocking, --blocked-by, --tag, or their --remove-* variants)")
 		}
 
-		// Output result
 		if updateJSON {
 			msg := "Bean updated"
 			if wasArchived {
@@ -123,135 +98,131 @@ var updateCmd = &cobra.Command{
 	},
 }
 
-// buildUpdateInput constructs the GraphQL input from flags and returns which fields changed.
-func buildUpdateInput(cmd *cobra.Command, existingTags []string, currentBody string) (model.UpdateBeanInput, []string, error) {
-	var input model.UpdateBeanInput
+func applyFieldUpdates(cmd *cobra.Command, b *bean.Bean) (bool, []string, error) {
 	var changes []string
+	changed := false
 
 	if cmd.Flags().Changed("status") {
 		if !cfg.IsValidStatus(updateStatus) {
-			return input, nil, fmt.Errorf("invalid status: %s (must be %s)", updateStatus, cfg.StatusList())
+			return false, nil, fmt.Errorf("invalid status: %s (must be %s)", updateStatus, cfg.StatusList())
 		}
-		input.Status = &updateStatus
+		b.Status = updateStatus
 		changes = append(changes, "status")
+		changed = true
 	}
 
 	if cmd.Flags().Changed("type") {
 		if !cfg.IsValidType(updateType) {
-			return input, nil, fmt.Errorf("invalid type: %s (must be %s)", updateType, cfg.TypeList())
+			return false, nil, fmt.Errorf("invalid type: %s (must be %s)", updateType, cfg.TypeList())
 		}
-		input.Type = &updateType
+		b.Type = updateType
 		changes = append(changes, "type")
+		changed = true
 	}
 
 	if cmd.Flags().Changed("priority") {
 		if !cfg.IsValidPriority(updatePriority) {
-			return input, nil, fmt.Errorf("invalid priority: %s (must be %s)", updatePriority, cfg.PriorityList())
+			return false, nil, fmt.Errorf("invalid priority: %s (must be %s)", updatePriority, cfg.PriorityList())
 		}
-		input.Priority = &updatePriority
+		b.Priority = updatePriority
 		changes = append(changes, "priority")
+		changed = true
 	}
 
 	if cmd.Flags().Changed("title") {
-		input.Title = &updateTitle
+		b.Title = updateTitle
 		changes = append(changes, "title")
+		changed = true
 	}
 
-	// Handle body modifications
 	if cmd.Flags().Changed("body") || cmd.Flags().Changed("body-file") {
-		// Full body replacement
 		body, err := resolveContent(updateBody, updateBodyFile)
 		if err != nil {
-			return input, nil, err
+			return false, nil, err
 		}
-		input.Body = &body
+		b.Body = body
 		changes = append(changes, "body")
+		changed = true
 	} else if cmd.Flags().Changed("body-replace-old") || cmd.Flags().Changed("body-append") {
-		// Body modifications via bodyMod
-		bodyMod := &model.BodyModification{}
-
 		if cmd.Flags().Changed("body-replace-old") {
-			// --body-replace-old requires --body-replace-new (enforced by MarkFlagsRequiredTogether)
-			bodyMod.Replace = []*model.ReplaceOperation{
-				{
-					Old: bean.UnescapeBody(updateBodyReplaceOld),
-					New: bean.UnescapeBody(updateBodyReplaceNew),
-				},
+			newBody, err := applyBodyReplace(b.Body, bean.UnescapeBody(updateBodyReplaceOld), bean.UnescapeBody(updateBodyReplaceNew))
+			if err != nil {
+				return false, nil, err
 			}
+			b.Body = newBody
 		}
 
 		if cmd.Flags().Changed("body-append") {
 			appendText, err := resolveAppendContent(updateBodyAppend)
 			if err != nil {
-				return input, nil, err
+				return false, nil, err
 			}
-			bodyMod.Append = &appendText
+			b.Body = applyBodyAppend(b.Body, appendText)
 		}
-
-		input.BodyMod = bodyMod
 		changes = append(changes, "body")
+		changed = true
 	}
 
-	// Handle tags using granular add/remove (consistent with relationships)
 	if len(updateTag) > 0 {
-		input.AddTags = updateTag
+		if err := applyTags(b, updateTag); err != nil {
+			return false, nil, err
+		}
 		changes = append(changes, "tags")
+		changed = true
 	}
 	if len(updateRemoveTag) > 0 {
-		input.RemoveTags = updateRemoveTag
+		for _, t := range updateRemoveTag {
+			b.RemoveTag(t)
+		}
 		changes = append(changes, "tags")
+		changed = true
 	}
 
-	// Handle parent relationship
 	if cmd.Flags().Changed("parent") {
-		input.Parent = &updateParent
+		b.Parent = updateParent
 		changes = append(changes, "parent")
+		changed = true
 	} else if updateRemoveParent {
-		emptyParent := ""
-		input.Parent = &emptyParent
+		b.Parent = ""
 		changes = append(changes, "parent")
+		changed = true
 	}
 
-	// Handle blocking relationships
 	if len(updateBlocking) > 0 {
-		input.AddBlocking = updateBlocking
+		b.Blocking = append(b.Blocking, updateBlocking...)
 		changes = append(changes, "blocking")
+		changed = true
 	}
 	if len(updateRemoveBlocking) > 0 {
-		input.RemoveBlocking = updateRemoveBlocking
+		for _, id := range updateRemoveBlocking {
+			b.RemoveBlocking(id)
+		}
 		changes = append(changes, "blocking")
+		changed = true
 	}
 
-	// Handle blocked-by relationships
 	if len(updateBlockedBy) > 0 {
-		input.AddBlockedBy = updateBlockedBy
+		b.BlockedBy = append(b.BlockedBy, updateBlockedBy...)
 		changes = append(changes, "blocked-by")
+		changed = true
 	}
 	if len(updateRemoveBlockedBy) > 0 {
-		input.RemoveBlockedBy = updateRemoveBlockedBy
+		for _, id := range updateRemoveBlockedBy {
+			b.RemoveBlockedBy(id)
+		}
 		changes = append(changes, "blocked-by")
+		changed = true
 	}
 
-	return input, changes, nil
+	return changed, changes, nil
 }
 
-// hasFieldUpdates returns true if any field in the input is set.
-func hasFieldUpdates(input model.UpdateBeanInput) bool {
-	return input.Status != nil || input.Type != nil || input.Priority != nil ||
-		input.Title != nil || input.Body != nil || input.BodyMod != nil || input.Tags != nil ||
-		input.AddTags != nil || input.RemoveTags != nil ||
-		input.Parent != nil || input.AddBlocking != nil || input.RemoveBlocking != nil ||
-		input.AddBlockedBy != nil || input.RemoveBlockedBy != nil
-}
-
-// isConflictError returns true if the error is an ETag-related conflict error.
 func isConflictError(err error) bool {
 	var mismatchErr *beancore.ETagMismatchError
 	var requiredErr *beancore.ETagRequiredError
 	return errors.As(err, &mismatchErr) || errors.As(err, &requiredErr)
 }
 
-// mutationError returns a cmdError with the appropriate error code based on the error type.
 func mutationError(jsonOutput bool, err error) error {
 	if isConflictError(err) {
 		return cmdError(jsonOutput, output.ErrConflict, "%s", err)
@@ -260,7 +231,6 @@ func mutationError(jsonOutput bool, err error) error {
 }
 
 func RegisterUpdateCmd(root *cobra.Command) {
-	// Build help text with allowed values from hardcoded config
 	statusNames := make([]string, len(config.DefaultStatuses))
 	for i, s := range config.DefaultStatuses {
 		statusNames[i] = s.Name
@@ -294,10 +264,8 @@ func RegisterUpdateCmd(root *cobra.Command) {
 	updateCmd.Flags().StringVar(&updateIfMatch, "if-match", "", "Only update if etag matches (optimistic locking)")
 	updateCmd.MarkFlagsMutuallyExclusive("parent", "remove-parent")
 	updateCmd.Flags().BoolVar(&updateJSON, "json", false, "Output as JSON")
-	// body and body-file are mutually exclusive with body modifications
 	updateCmd.MarkFlagsMutuallyExclusive("body", "body-file", "body-replace-old")
 	updateCmd.MarkFlagsMutuallyExclusive("body", "body-file", "body-append")
-	// body-replace-old and body-append can now be used together!
 	updateCmd.MarkFlagsRequiredTogether("body-replace-old", "body-replace-new")
 	root.AddCommand(updateCmd)
 }

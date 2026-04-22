@@ -2,15 +2,13 @@ package commands
 
 import (
 	"bufio"
-	"context"
 	"fmt"
 	"os"
 	"strings"
 
+	"github.com/hmans/beans/internal/output"
 	"github.com/hmans/beans/pkg/bean"
 	"github.com/hmans/beans/pkg/beancore"
-	"github.com/hmans/beans/pkg/beangraph"
-	"github.com/hmans/beans/internal/output"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +17,6 @@ var (
 	deleteJSON  bool
 )
 
-// beanWithLinks holds a bean and its incoming links for batch processing
 type beanWithLinks struct {
 	bean  *bean.Bean
 	links []beancore.IncomingLink
@@ -35,18 +32,11 @@ If other beans reference the target bean(s) (as parent or via blocking), you wil
 warned and those references will be removed after confirmation. Use -f to skip all warnings.`,
 	Args: cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		ctx := context.Background()
-		resolver := &beangraph.CoreResolver{Core: core}
-
-		// Collect all beans and their incoming links upfront (validate before deleting)
 		var targets []beanWithLinks
 		for _, id := range args {
-			b, err := resolver.Bean(ctx, id)
+			b, err := core.Get(id)
 			if err != nil {
 				return cmdError(deleteJSON, output.ErrNotFound, "failed to find bean: %v", err)
-			}
-			if b == nil {
-				return cmdError(deleteJSON, output.ErrNotFound, "bean not found: %s", id)
 			}
 			targets = append(targets, beanWithLinks{
 				bean:  b,
@@ -54,7 +44,6 @@ warned and those references will be removed after confirmation. Use -f to skip a
 			})
 		}
 
-		// Prompt for confirmation (JSON implies force)
 		if !forceDelete && !deleteJSON {
 			if !confirmDeleteMultiple(targets) {
 				fmt.Println("Cancelled")
@@ -62,19 +51,19 @@ warned and those references will be removed after confirmation. Use -f to skip a
 			}
 		}
 
-		// Delete all beans via GraphQL mutation
 		var deleted []*bean.Bean
 		var totalLinksRemoved int
 		for _, target := range targets {
-			_, err := resolver.DeleteBean(ctx, target.bean.ID)
-			if err != nil {
+			if len(target.links) > 0 {
+				core.RemoveLinksTo(target.bean.ID)
+			}
+			if err := core.Delete(target.bean.ID); err != nil {
 				return cmdError(deleteJSON, output.ErrFileError, "failed to delete bean %s: %v", target.bean.ID, err)
 			}
 			deleted = append(deleted, target.bean)
 			totalLinksRemoved += len(target.links)
 		}
 
-		// Output results
 		if deleteJSON {
 			if len(deleted) == 1 {
 				return output.Success(deleted[0], "Bean deleted")
@@ -97,7 +86,6 @@ warned and those references will be removed after confirmation. Use -f to skip a
 	},
 }
 
-// confirmDeleteMultiple prompts the user to confirm deletion of one or more beans.
 func confirmDeleteMultiple(targets []beanWithLinks) bool {
 	beansWithLinks := 0
 	totalLinks := 0
@@ -108,7 +96,6 @@ func confirmDeleteMultiple(targets []beanWithLinks) bool {
 		}
 	}
 
-	// Single bean: use simpler format
 	if len(targets) == 1 {
 		t := targets[0]
 		if len(t.links) > 0 {
@@ -121,7 +108,6 @@ func confirmDeleteMultiple(targets []beanWithLinks) bool {
 			fmt.Printf("Delete '%s' (%s)? [y/N] ", t.bean.Title, t.bean.Path)
 		}
 	} else {
-		// Multiple beans: show batch summary
 		fmt.Printf("About to delete %d bean(s):\n", len(targets))
 		for _, t := range targets {
 			if len(t.links) > 0 {

@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"context"
 	_ "embed"
 	"encoding/json"
 	"fmt"
@@ -13,7 +12,6 @@ import (
 	"text/template"
 
 	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/beangraph"
 	"github.com/spf13/cobra"
 )
 
@@ -31,7 +29,7 @@ var (
 
 // roadmapData holds the structured roadmap for JSON output.
 type roadmapData struct {
-	Milestones  []milestoneGroup `json:"milestones"`
+	Milestones  []milestoneGroup  `json:"milestones"`
 	Unscheduled *unscheduledGroup `json:"unscheduled,omitempty"`
 }
 
@@ -54,17 +52,11 @@ type epicGroup struct {
 	Items []*bean.Bean `json:"items,omitempty"`
 }
 
-
 var roadmapCmd = &cobra.Command{
 	Use:   "roadmap",
 	Short: "Generate a Markdown roadmap from milestones and epics",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		// Query all beans via GraphQL resolver
-		resolver := &beangraph.CoreResolver{Core: core}
-		allBeans, err := resolver.Beans(context.Background(), nil)
-		if err != nil {
-			return fmt.Errorf("querying beans: %w", err)
-		}
+		allBeans := core.All()
 
 		// Build the roadmap
 		data := buildRoadmap(allBeans, roadmapIncludeDone, roadmapStatus, roadmapNoStatus)

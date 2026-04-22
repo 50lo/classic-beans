@@ -1,15 +1,13 @@
 package commands
 
 import (
-	"context"
 	"fmt"
 	"strings"
 
-	"github.com/hmans/beans/pkg/config"
-	"github.com/hmans/beans/pkg/beangraph"
-	"github.com/hmans/beans/pkg/beangraph/model"
 	"github.com/hmans/beans/internal/output"
 	"github.com/hmans/beans/internal/ui"
+	"github.com/hmans/beans/pkg/bean"
+	"github.com/hmans/beans/pkg/config"
 	"github.com/spf13/cobra"
 )
 
@@ -38,7 +36,6 @@ var createCmd = &cobra.Command{
 			title = "Untitled"
 		}
 
-		// Validate inputs
 		if createStatus != "" && !cfg.IsValidStatus(createStatus) {
 			return cmdError(createJSON, output.ErrInvalidStatus, "invalid status: %s (must be %s)", createStatus, cfg.StatusList())
 		}
@@ -54,55 +51,40 @@ var createCmd = &cobra.Command{
 			return cmdError(createJSON, output.ErrFileError, "%s", err)
 		}
 
-		// Build GraphQL input
-		input := model.CreateBeanInput{Title: title}
+		status := cfg.GetDefaultStatus()
 		if createStatus != "" {
-			input.Status = &createStatus
-		} else {
-			defaultStatus := cfg.GetDefaultStatus()
-			input.Status = &defaultStatus
+			status = createStatus
 		}
+
+		beanType := cfg.GetDefaultType()
 		if createType != "" {
-			input.Type = &createType
-		} else {
-			defaultType := cfg.GetDefaultType()
-			input.Type = &defaultType
-		}
-		if createPriority != "" {
-			input.Priority = &createPriority
-		}
-		if body != "" {
-			input.Body = &body
-		}
-		if len(createTag) > 0 {
-			input.Tags = createTag
+			beanType = createType
 		}
 
-		// Add parent
-		if createParent != "" {
-			input.Parent = &createParent
+		b := &bean.Bean{
+			Title:     title,
+			Status:    status,
+			Type:      beanType,
+			Priority:  createPriority,
+			Body:      body,
+			Tags:      createTag,
+			Parent:    createParent,
+			Blocking:  createBlocking,
+			BlockedBy: createBlockedBy,
 		}
 
-		// Add blocking
-		if len(createBlocking) > 0 {
-			input.Blocking = createBlocking
-		}
-
-		// Add blocked_by
-		if len(createBlockedBy) > 0 {
-			input.BlockedBy = createBlockedBy
-		}
-
-		// Add custom prefix
 		if createPrefix != "" {
-			input.Prefix = &createPrefix
-		}
-
-		// Create via core resolver
-		resolver := &beangraph.CoreResolver{Core: core}
-		b, err := resolver.CreateBean(context.Background(), input)
-		if err != nil {
-			return cmdError(createJSON, output.ErrFileError, "failed to create bean: %v", err)
+			savedPrefix := cfg.Beans.Prefix
+			cfg.Beans.Prefix = createPrefix
+			if err := core.Create(b); err != nil {
+				cfg.Beans.Prefix = savedPrefix
+				return cmdError(createJSON, output.ErrFileError, "failed to create bean: %v", err)
+			}
+			cfg.Beans.Prefix = savedPrefix
+		} else {
+			if err := core.Create(b); err != nil {
+				return cmdError(createJSON, output.ErrFileError, "failed to create bean: %v", err)
+			}
 		}
 
 		if createJSON {
@@ -115,7 +97,6 @@ var createCmd = &cobra.Command{
 }
 
 func RegisterCreateCmd(root *cobra.Command) {
-	// Build help text with allowed values from hardcoded config
 	statusNames := make([]string, len(config.DefaultStatuses))
 	for i, s := range config.DefaultStatuses {
 		statusNames[i] = s.Name
