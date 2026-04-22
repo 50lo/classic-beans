@@ -1,40 +1,10 @@
-![beans](https://github.com/user-attachments/assets/776f094c-f2c4-4724-9a0b-5b87e88bc50d)
+**Beans is an issue tracker for you and your coding agents.** Instead of tracking tasks in a separate application, Beans stores them right alongside your code. 
 
-[![License](https://img.shields.io/github/license/hmans/beans?style=for-the-badge)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/hmans/beans?style=for-the-badge)](https://github.com/hmans/beans/releases)
-[![CI](https://img.shields.io/github/actions/workflow/status/hmans/beans/test.yml?branch=main&label=tests&style=for-the-badge)](https://github.com/hmans/beans/actions/workflows/test.yml)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/hmans/beans?style=for-the-badge)](https://go.dev/)
-[![Go Report Card](https://goreportcard.com/badge/github.com/hmans/beans?style=for-the-badge)](https://goreportcard.com/report/github.com/hmans/beans)
-
-**Beans is an issue tracker for you, your team, and your coding agents.** Instead of tracking tasks in a separate application, Beans stores them right alongside your code. You can use the `beans` CLI to interact with your tasks, but more importantly, so can your favorite coding agent!
-
-This gives your robot friends a juicy upgrade: now they get a complete view of your project, make suggestions for what to work on next, track their progress, create bug issues for problems they find, and more.
-
-You've been programming all your life; now you get to be a product manager. Let's go! 🚀
-
-## Announcement Trailer ✨
-
-https://github.com/user-attachments/assets/dbe45408-d3ed-4681-a436-a5e3046163da
-
-## Stability Warning ⚠️
-
-Beans is still under heavy development, and its features and APIs may still change significantly. If you decide to use it now, please follow the release notes closely.
-
-Since Beans emits its own prompt instructions for your coding agent, most changes will "just work"; but sometimes, we modify the schema of the underlying data files, which may require some manual migration steps. If you get caught by one of these changes, your agent will often be able to migrate your data for you:
-
-```
-The Beans data format has changed. Please migrate this project's beans to the new format.
-```
-
-## Features
-
-- **Track tasks, bugs, features**, and more right alongside your code.
-- **Plain old Markdown files** stored in a `.beans` directory in your project. Easy to version control, readable and editable by humans and machines alike!
-- Use the `beans` CLI to create, list, view, update, and archive beans; but more importantly, **let your coding agent do it for you**!
-- **Supercharge your robot friend** with full context about your project and its open tasks. A built-in **GraphQL query engine** allows your agent to get exactly the information it needs, keeping token use to a minimum.
-- **Project memory**: Completed beans are archived and serve as project memory that your coding agent can query for context about past work.
-- A beautiful **built-in** TUI for browsing and managing your beans from the terminal.
-- Generates a **Markdown roadmap document** for your project from your data.
+This fork of beans is called **Classic Beans** - I made it because I needed a stable verison of beans. 
+Key differences from the original beans project:
+- no TUI
+- no Web UI
+- no GraphQL
 
 ## Installation
 
@@ -44,16 +14,10 @@ We'll need to do three things:
 2. Configure your project to use it.
 3. Configure your coding agent to interact with it.
 
-Either download Beans from the [Releases section](https://github.com/hmans/beans/releases), or install it via Homebrew:
+Install directly via Go:
 
 ```bash
-brew install hmans/beans/beans
-```
-
-Alternatively, install directly via Go:
-
-```bash
-go install github.com/hmans/beans@latest
+go install github.com/50lo/beans@latest
 ```
 
 ## Configure Your Project
@@ -82,44 +46,7 @@ The most basic way to teach your agent about Beans is to simply add the followin
 **IMPORTANT**: before you do anything else, run the `beans prime` command and heed its output.
 ```
 
-Some agents provide mechanisms to automate this step:
-
-### Claude Code
-
-An official Beans plugin for Claude is in the works, but for the time being, please manually add the following hooks to your project's `.claude/settings.json` file:
-
-```json
-{
-  "hooks": {
-    "SessionStart": [
-      { "hooks": [{ "type": "command", "command": "beans prime" }] }
-    ],
-    "PreCompact": [
-      { "hooks": [{ "type": "command", "command": "beans prime" }] }
-    ]
-  }
-}
-```
-
-### OpenCode
-
-Beans integrates with OpenCode via a plugin that injects task context into your sessions. To set it up, **copy the plugin** from [`.opencode/plugin/beans-prime.ts`](.opencode/plugin/beans-prime.ts) to your project's `.opencode/plugin/` directory (or `~/.opencode/plugin/` for global availability across all projects).
-
-## Usage Hints
-
-As a human, you can get an overview of the CLI's functionalities by running:
-
-```bash
-beans help
-```
-
-You might specifically be interested in the interactive TUI:
-
-```bash
-beans tui
-```
-
-### Example Workflows
+## Example Workflows
 
 **But the real power of Beans** comes from letting your coding agent manage your tasks for you.
 
@@ -156,13 +83,9 @@ When making a commit, include the relevant bean IDs in the commit message
 
 ## Contributing
 
-This project currently does not accept contributions -- it's just way too early for that!
-But if you do have suggestions or feedback, please feel free to open an issue.
+This project (the fork) does not accept contributions because the goal is to keep classic beans CLI behaviour.
 
 ## License
 
-This project is licensed under the Apache-2.0 License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache-2.0 License (same as the original project). See the [LICENSE](LICENSE) file for details.
 
-## Getting in Touch
-
-If you have any questions, suggestions, or just want to say hi, feel free to reach out to me [on Bluesky](https://bsky.app/profile/hmans.dev), or [open an issue](https://github.com/hmans/beans/issues) in this repository.
