@@ -131,3 +131,24 @@ func TestShortStatus(t *testing.T) {
 		})
 	}
 }
+
+func TestRenderBeanRow_UnicodeTitleTagAlignment(t *testing.T) {
+	row := stripANSI(RenderBeanRow("fp-4qw6", "todo", "epic", "Phase E — Deferred read-side review", BeanRowConfig{
+		StatusColor:   "green",
+		TypeColor:     "purple",
+		PriorityColor: "gray",
+		Priority:      "deferred",
+		MaxTitleWidth: 40,
+		Tags:          []string{"alpha"},
+		ShowTags:      true,
+		TagsColWidth:  24,
+		MaxTags:       1,
+		IDColWidth:    14,
+		TreePrefix:    "├─ ",
+	}))
+
+	wantTagCol := 14 + 1 + ColWidthType + 1 + ColWidthStatus + 1 + 40 + 1
+	if got := displayIndex(row, " alpha "); got != wantTagCol {
+		t.Fatalf("tag column misaligned: got %d want %d\nrow=%q", got, wantTagCol, row)
+	}
+}

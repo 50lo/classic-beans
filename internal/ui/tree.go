@@ -10,25 +10,25 @@ import (
 
 // TreeNode represents a node in the bean tree hierarchy.
 type TreeNode struct {
-	Bean            *bean.Bean
-	Children        []*TreeNode
-	Matched         bool   // true if this bean matched the filter (vs. shown for context)
+	Bean           *bean.Bean
+	Children       []*TreeNode
+	Matched        bool   // true if this bean matched the filter (vs. shown for context)
 	ImplicitStatus string // implicit terminal status from an ancestor, if any
 }
 
 // TreeNodeJSON is the JSON-serializable version of TreeNode.
 type TreeNodeJSON struct {
-	ID        string          `json:"id"`
-	Slug      string          `json:"slug,omitempty"`
-	Path      string          `json:"path"`
-	Title     string          `json:"title"`
-	Status    string          `json:"status"`
-	Type      string          `json:"type,omitempty"`
-	Priority  string          `json:"priority,omitempty"`
-	Tags      []string        `json:"tags,omitempty"`
-	Body      string          `json:"body,omitempty"`
-	Matched   bool            `json:"matched"`
-	Children  []*TreeNodeJSON `json:"children,omitempty"`
+	ID       string          `json:"id"`
+	Slug     string          `json:"slug,omitempty"`
+	Path     string          `json:"path"`
+	Title    string          `json:"title"`
+	Status   string          `json:"status"`
+	Type     string          `json:"type,omitempty"`
+	Priority string          `json:"priority,omitempty"`
+	Tags     []string        `json:"tags,omitempty"`
+	Body     string          `json:"body,omitempty"`
+	Matched  bool            `json:"matched"`
+	Children []*TreeNodeJSON `json:"children,omitempty"`
 }
 
 // ToJSON converts a TreeNode to its JSON-serializable form.
@@ -141,9 +141,9 @@ func buildNodes(beans []*bean.Bean, children map[string][]*bean.Bean, matchedSet
 	nodes := make([]*TreeNode, len(beans))
 	for i, b := range beans {
 		nodes[i] = &TreeNode{
-			Bean:            b,
-			Matched:         matchedSet[b.ID],
-			Children:        buildNodes(children[b.ID], children, matchedSet, implicitStatuses),
+			Bean:           b,
+			Matched:        matchedSet[b.ID],
+			Children:       buildNodes(children[b.ID], children, matchedSet, implicitStatuses),
 			ImplicitStatus: implicitStatuses[b.ID],
 		}
 	}
@@ -193,25 +193,27 @@ func RenderTree(nodes []*TreeNode, cfg *config.Config, maxIDWidth int, hasTags b
 	adjustedWidth := termWidth - treeColWidth + ColWidthID
 	cols := CalculateResponsiveColumns(adjustedWidth, hasTags)
 
-	// Calculate title width from remaining space
-	// Account for: tree/ID col, type col, status col, priority symbol (2), space before tags (1)
-	titleWidth := termWidth - treeColWidth - ColWidthType - ColWidthStatus - 3
+	// Leave one spare terminal column to avoid wrapping at exact pane width.
+	availableWidth := termWidth - 1
+
+	// Calculate title width from remaining space.
+	// Rows render with separators between ID, type, status, title, and tags columns.
+	titleWidth := availableWidth - treeColWidth - ColWidthType - ColWidthStatus - 3
 	if cols.ShowTags {
-		titleWidth -= cols.Tags
+		titleWidth -= cols.Tags + 1
 	}
 	if titleWidth < 20 {
 		titleWidth = 20
 	}
 
-	// Header with manual padding (lipgloss Width doesn't handle styled strings well)
+	// Header uses the same separator layout as rows so visible columns stay aligned.
 	headerCol := lipgloss.NewStyle().Foreground(ColorMuted)
-	idHeader := headerCol.Render("ID") + strings.Repeat(" ", treeColWidth-2)
-	typeHeader := headerCol.Render("T") + strings.Repeat(" ", ColWidthType-1)
-	statusHeader := headerCol.Render("S") + strings.Repeat(" ", ColWidthStatus-1)
-
-	header := idHeader + typeHeader + statusHeader + headerCol.Render("TITLE")
+	header := renderHeaderCell(headerCol, "ID", treeColWidth) +
+		" " + renderHeaderCell(headerCol, "T", ColWidthType) +
+		" " + renderHeaderCell(headerCol, "S", ColWidthStatus) +
+		" " + headerCol.Render("TITLE")
 	if cols.ShowTags && titleWidth > 5 {
-		header += strings.Repeat(" ", titleWidth-5+3) + headerCol.Render("TAGS") // +3 for priority/spacing
+		header += strings.Repeat(" ", titleWidth-5) + " " + headerCol.Render("TAGS")
 	}
 	dividerWidth := termWidth - 1 // -1 to avoid wrapping on exact terminal width
 	sb.WriteString(header)
@@ -230,6 +232,13 @@ func RenderTree(nodes []*TreeNode, cfg *config.Config, maxIDWidth int, hasTags b
 	renderNodes(&sb, nodes, 0, nil, cfg, renderCfg)
 
 	return sb.String()
+}
+
+func renderHeaderCell(style lipgloss.Style, label string, width int) string {
+	if width <= len(label) {
+		return style.Render(label)
+	}
+	return style.Render(label) + strings.Repeat(" ", width-len(label))
 }
 
 // treeRenderConfig holds computed rendering configuration for tree output
@@ -285,20 +294,20 @@ func renderNode(sb *strings.Builder, node *TreeNode, depth int, isLast bool, anc
 
 	// Use shared RenderBeanRow function with responsive columns
 	row := RenderBeanRow(b.ID, b.Status, b.Type, b.Title, BeanRowConfig{
-		StatusColor:     colors.StatusColor,
-		TypeColor:       colors.TypeColor,
-		PriorityColor:   colors.PriorityColor,
-		Priority:        b.Priority,
-		IsArchive:       colors.IsArchive,
-		MaxTitleWidth:   renderCfg.titleWidth,
-		ShowCursor:      false,
-		Tags:            b.Tags,
-		ShowTags:        renderCfg.cols.ShowTags,
-		TagsColWidth:    renderCfg.cols.Tags,
-		MaxTags:         renderCfg.cols.MaxTags,
-		TreePrefix:      prefix,
-		Dimmed:          !node.Matched,
-		IDColWidth:      renderCfg.treeColWidth,
+		StatusColor:    colors.StatusColor,
+		TypeColor:      colors.TypeColor,
+		PriorityColor:  colors.PriorityColor,
+		Priority:       b.Priority,
+		IsArchive:      colors.IsArchive,
+		MaxTitleWidth:  renderCfg.titleWidth,
+		ShowCursor:     false,
+		Tags:           b.Tags,
+		ShowTags:       renderCfg.cols.ShowTags,
+		TagsColWidth:   renderCfg.cols.Tags,
+		MaxTags:        renderCfg.cols.MaxTags,
+		TreePrefix:     prefix,
+		Dimmed:         !node.Matched,
+		IDColWidth:     renderCfg.treeColWidth,
 		ImplicitStatus: node.ImplicitStatus,
 	})
 
@@ -309,11 +318,11 @@ func renderNode(sb *strings.Builder, node *TreeNode, depth int, isLast bool, anc
 // FlatItem represents a flattened tree node with rendering context.
 // Used by TUI to render tree structure in a flat list.
 type FlatItem struct {
-	Bean            *bean.Bean
-	Depth           int    // 0 = root, 1+ = nested
-	IsLast          bool   // last child at this level
-	Matched         bool   // true if bean matched filter (vs. shown for context)
-	TreePrefix      string // pre-computed tree prefix (e.g., "  └─")
+	Bean           *bean.Bean
+	Depth          int    // 0 = root, 1+ = nested
+	IsLast         bool   // last child at this level
+	Matched        bool   // true if bean matched filter (vs. shown for context)
+	TreePrefix     string // pre-computed tree prefix (e.g., "  └─")
 	ImplicitStatus string // implicit terminal status from an ancestor, if any
 }
 
@@ -351,11 +360,11 @@ func flattenNodes(nodes []*TreeNode, depth int, ancestry []bool, items *[]FlatIt
 		}
 
 		*items = append(*items, FlatItem{
-			Bean:            node.Bean,
-			Depth:           depth,
-			IsLast:          isLast,
-			Matched:         node.Matched,
-			TreePrefix:      prefix,
+			Bean:           node.Bean,
+			Depth:          depth,
+			IsLast:         isLast,
+			Matched:        node.Matched,
+			TreePrefix:     prefix,
 			ImplicitStatus: node.ImplicitStatus,
 		})
 

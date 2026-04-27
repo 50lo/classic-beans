@@ -1,9 +1,16 @@
 package ui
 
 import (
+	"path/filepath"
+	"regexp"
+	"sort"
+	"strings"
 	"testing"
 
+	"github.com/charmbracelet/lipgloss"
 	"github.com/hmans/beans/pkg/bean"
+	"github.com/hmans/beans/pkg/beancore"
+	"github.com/hmans/beans/pkg/config"
 )
 
 func TestBuildTree(t *testing.T) {
@@ -207,4 +214,217 @@ func TestTreeNodeToJSON(t *testing.T) {
 			t.Errorf("expected body content, got %s", json.Body)
 		}
 	})
+}
+
+func TestRenderTreeHeaderAlignment(t *testing.T) {
+	t.Run("title aligns without tags", func(t *testing.T) {
+		nodes := []*TreeNode{
+			{
+				Bean: &bean.Bean{
+					ID:     "beans-a1",
+					Title:  "Example title",
+					Status: "todo",
+					Type:   "task",
+				},
+				Matched: true,
+			},
+		}
+
+		output := stripANSI(RenderTree(nodes, config.Default(), 12, false, 100))
+		lines := strings.Split(strings.TrimRight(output, "\n"), "\n")
+		if len(lines) < 3 {
+			t.Fatalf("expected at least 3 lines, got %d", len(lines))
+		}
+
+		header := lines[0]
+		row := lines[2]
+
+		if got, want := displayIndex(header, "TITLE"), displayIndex(row, "Example title"); got != want {
+			t.Fatalf("TITLE column misaligned: header index=%d row index=%d\nheader=%q\nrow=%q", got, want, header, row)
+		}
+	})
+
+	t.Run("title and tags align with tags column", func(t *testing.T) {
+		nodes := []*TreeNode{
+			{
+				Bean: &bean.Bean{
+					ID:     "beans-a1",
+					Title:  "Example title",
+					Status: "todo",
+					Type:   "task",
+					Tags:   []string{"alpha"},
+				},
+				Matched: true,
+			},
+		}
+
+		output := stripANSI(RenderTree(nodes, config.Default(), 12, true, 160))
+		lines := strings.Split(strings.TrimRight(output, "\n"), "\n")
+		if len(lines) < 3 {
+			t.Fatalf("expected at least 3 lines, got %d", len(lines))
+		}
+
+		header := lines[0]
+		row := lines[2]
+
+		if got, want := displayIndex(header, "TITLE"), displayIndex(row, "Example title"); got != want {
+			t.Fatalf("TITLE column misaligned: header index=%d row index=%d\nheader=%q\nrow=%q", got, want, header, row)
+		}
+		if got, want := displayIndex(header, "TAGS"), displayIndex(row, " alpha "); got != want {
+			t.Fatalf("TAGS column misaligned: header index=%d row index=%d\nheader=%q\nrow=%q", got, want, header, row)
+		}
+	})
+}
+
+func TestRenderTreeHeaderAlignmentWithTmpFixtureData(t *testing.T) {
+	fixtureRoot := filepath.Join("..", "..", "tmp", ".beans")
+	testCfg := config.Default()
+	core := beancore.New(fixtureRoot, testCfg)
+	if err := core.Load(); err != nil {
+		t.Fatalf("loading tmp fixture beans: %v", err)
+	}
+
+	parentID := "fp-6qkk"
+	matched, err := core.FilteredBeans(&beancore.Filter{ParentID: &parentID})
+	if err != nil {
+		t.Fatalf("filtering tmp fixture beans: %v", err)
+	}
+
+	allBeans := core.All()
+	implicitStatuses := make(map[string]string, len(allBeans))
+	for _, b := range allBeans {
+		if status, _ := core.ImplicitStatus(b.ID); status != "" {
+			implicitStatuses[b.ID] = status
+		}
+	}
+
+	sortFn := func(beans []*bean.Bean) {
+		bean.SortByStatusPriorityAndType(beans, testCfg.StatusNames(), testCfg.PriorityNames(), testCfg.TypeNames())
+		sort.SliceStable(beans, func(i, j int) bool {
+			return beans[i].ID < beans[j].ID
+		})
+	}
+
+	tree := BuildTree(matched, allBeans, sortFn, implicitStatuses)
+
+	maxIDWidth := 2
+	for _, b := range allBeans {
+		if len(b.ID) > maxIDWidth {
+			maxIDWidth = len(b.ID)
+		}
+	}
+	maxIDWidth += 2
+
+	hasTags := false
+	for _, b := range matched {
+		if len(b.Tags) > 0 {
+			hasTags = true
+			break
+		}
+	}
+	if !hasTags {
+		t.Fatal("expected tmp fixture subtree to include tagged matched beans")
+	}
+
+	output := stripANSI(RenderTree(tree, testCfg, maxIDWidth, hasTags, 180))
+	lines := strings.Split(strings.TrimRight(output, "\n"), "\n")
+	if len(lines) < 4 {
+		t.Fatalf("expected multiple rendered lines, got %d", len(lines))
+	}
+
+	header := lines[0]
+	titleCol := displayIndex(header, "TITLE")
+	tagsCol := displayIndex(header, "TAGS")
+	if titleCol < 0 || tagsCol < 0 {
+		t.Fatalf("expected TITLE and TAGS headers, got %q", header)
+	}
+
+	rootRow := findRenderedRow(t, lines[2:], "fp-6qkk")
+	phaseERow := findRenderedRow(t, lines[2:], "fp-4qw6")
+	bugRow := findRenderedRow(t, lines[2:], "fp-j9jk")
+
+	if got := displayIndex(rootRow, "v4 source-host runtime and webhook refactor"); got != titleCol {
+		t.Fatalf("root title misaligned: title index=%d want %d\nrow=%q", got, titleCol, rootRow)
+	}
+	if got := displayIndex(phaseERow, " design-rev"); got != tagsCol {
+		t.Fatalf("phase E tag misaligned: tag index=%d want %d\nrow=%q", got, tagsCol, phaseERow)
+	}
+	if got := displayIndex(bugRow, " code-review"); got != tagsCol {
+		t.Fatalf("bug tag misaligned: tag index=%d want %d\nrow=%q", got, tagsCol, bugRow)
+	}
+}
+
+func TestRenderTreeTaggedRowsStayWithinPaneWidth(t *testing.T) {
+	fixtureRoot := filepath.Join("..", "..", "tmp", ".beans")
+	testCfg := config.Default()
+	core := beancore.New(fixtureRoot, testCfg)
+	if err := core.Load(); err != nil {
+		t.Fatalf("loading tmp fixture beans: %v", err)
+	}
+
+	parentID := "fp-3i6d"
+	matched, err := core.FilteredBeans(&beancore.Filter{ParentID: &parentID})
+	if err != nil {
+		t.Fatalf("filtering tmp fixture beans: %v", err)
+	}
+
+	allBeans := core.All()
+	implicitStatuses := make(map[string]string, len(allBeans))
+	for _, b := range allBeans {
+		if status, _ := core.ImplicitStatus(b.ID); status != "" {
+			implicitStatuses[b.ID] = status
+		}
+	}
+
+	sortFn := func(beans []*bean.Bean) {
+		bean.SortByStatusPriorityAndType(beans, testCfg.StatusNames(), testCfg.PriorityNames(), testCfg.TypeNames())
+	}
+
+	tree := BuildTree(matched, allBeans, sortFn, implicitStatuses)
+
+	maxIDWidth := 2
+	for _, b := range allBeans {
+		if len(b.ID) > maxIDWidth {
+			maxIDWidth = len(b.ID)
+		}
+	}
+	maxIDWidth += 2
+
+	const paneWidth = 145
+	output := stripANSI(RenderTree(tree, testCfg, maxIDWidth, true, paneWidth))
+	lines := strings.Split(strings.TrimRight(output, "\n"), "\n")
+	if len(lines) < 3 {
+		t.Fatalf("expected rendered output, got %d lines", len(lines))
+	}
+
+	for _, line := range lines {
+		if width := lipgloss.Width(line); width > paneWidth-1 {
+			t.Fatalf("line exceeds safe pane width: got %d want <= %d\nline=%q", width, paneWidth-1, line)
+		}
+	}
+}
+
+var ansiPattern = regexp.MustCompile(`\x1b\[[0-9;]*m`)
+
+func stripANSI(s string) string {
+	return ansiPattern.ReplaceAllString(s, "")
+}
+
+func findRenderedRow(t *testing.T, rows []string, id string) string {
+	t.Helper()
+	for _, row := range rows {
+		if strings.Contains(row, id) {
+			return row
+		}
+	}
+	t.Fatalf("row for %s not found", id)
+	return ""
+}
+
+func displayIndex(line, needle string) int {
+	idx := strings.Index(line, needle)
+	if idx < 0 {
+		return -1
+	}
+	return lipgloss.Width(line[:idx])
 }

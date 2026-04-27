@@ -32,7 +32,7 @@ run = "go run ./cmd/beans"
 
 [tasks.install]
 depends = "build"
-run = "cp beans ~/.local/bin/beans"
+run = "cp beans ~/bin/beans"
 
 [tasks."release:patch"]
 description = "Create a patch version tag (e.g., v0.1.4 → v0.1.5)"

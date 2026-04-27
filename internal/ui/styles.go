@@ -347,23 +347,23 @@ func RenderPrioritySymbol(priority, color string) string {
 
 // BeanRowConfig holds configuration for rendering a bean row
 type BeanRowConfig struct {
-	StatusColor   string
-	TypeColor     string
-	PriorityColor string
-	Priority      string // Priority value (critical, high, normal, low, deferred)
-	IsArchive     bool
-	MaxTitleWidth int  // 0 means no truncation
-	ShowCursor    bool // Show selection cursor
-	IsSelected    bool
-	IsMarked      bool     // Marked for multi-select batch operations
-	Tags          []string // Tags to display (optional)
-	ShowTags      bool     // Whether to show tags column
-	TagsColWidth  int      // Width of tags column (0 = default)
-	MaxTags       int      // Max tags to show (0 = default of 1)
-	TreePrefix      string   // Tree prefix (e.g., "├─" or "  └─") to prepend to ID
-	Dimmed          bool     // Render row dimmed (for unmatched ancestor beans in tree)
-	IDColWidth      int      // Width of ID column (0 = default of ColWidthID)
-	UseFullNames    bool     // Use full type/status names instead of single-char abbreviations
+	StatusColor    string
+	TypeColor      string
+	PriorityColor  string
+	Priority       string // Priority value (critical, high, normal, low, deferred)
+	IsArchive      bool
+	MaxTitleWidth  int  // 0 means no truncation
+	ShowCursor     bool // Show selection cursor
+	IsSelected     bool
+	IsMarked       bool     // Marked for multi-select batch operations
+	Tags           []string // Tags to display (optional)
+	ShowTags       bool     // Whether to show tags column
+	TagsColWidth   int      // Width of tags column (0 = default)
+	MaxTags        int      // Max tags to show (0 = default of 1)
+	TreePrefix     string   // Tree prefix (e.g., "├─" or "  └─") to prepend to ID
+	Dimmed         bool     // Render row dimmed (for unmatched ancestor beans in tree)
+	IDColWidth     int      // Width of ID column (0 = default of ColWidthID)
+	UseFullNames   bool     // Use full type/status names instead of single-char abbreviations
 	ImplicitStatus string   // Implicit terminal status from an ancestor (e.g., "scrapped")
 }
 
@@ -381,7 +381,7 @@ type ResponsiveColumns struct {
 	Status            int
 	Type              int
 	Tags              int
-	MaxTags           int  // How many tags to show
+	MaxTags           int // How many tags to show
 	ShowTags          bool
 	UseFullTypeStatus bool // Use full names instead of single-char abbreviations
 }
@@ -549,17 +549,12 @@ func RenderBeanRow(id, status, typeName, title string, cfg BeanRowConfig) string
 	}
 
 	// Title (truncate if needed, accounting for priority symbol width)
-	displayTitle := title
 	titleColWidth := cfg.MaxTitleWidth // Save original for padding
 	maxWidth := cfg.MaxTitleWidth
 	if maxWidth > 0 && prioritySymbol != "" {
-		maxWidth -= 2 // Account for symbol + space
+		maxWidth -= lipgloss.Width(prioritySymbol)
 	}
-	if maxWidth > 3 && len(title) > maxWidth {
-		displayTitle = title[:maxWidth-3] + "..."
-	} else if maxWidth > 0 && maxWidth <= 3 && len(title) > maxWidth {
-		displayTitle = title[:maxWidth]
-	}
+	displayTitle := truncateDisplayWidth(title, maxWidth)
 
 	// Cursor and title styling
 	var cursor string
@@ -593,11 +588,7 @@ func RenderBeanRow(id, status, typeName, title string, cfg BeanRowConfig) string
 
 	if cfg.ShowTags {
 		// Pad title column to fixed width so tags align in a column
-		// Calculate padding needed: titleColWidth - (priority symbol width + title length)
-		titleLen := len(displayTitle)
-		if prioritySymbol != "" {
-			titleLen += 2 // symbol + space
-		}
+		titleLen := lipgloss.Width(prioritySymbol) + lipgloss.Width(displayTitle)
 		padding := ""
 		if titleColWidth > titleLen {
 			padding = strings.Repeat(" ", titleColWidth-titleLen)
@@ -605,4 +596,34 @@ func RenderBeanRow(id, status, typeName, title string, cfg BeanRowConfig) string
 		return cursor + idCol + " " + typeCol + " " + statusCol + " " + prioritySymbol + titleStyled + padding + " " + tagsCol + implicitAnnotation
 	}
 	return cursor + idCol + " " + typeCol + " " + statusCol + " " + prioritySymbol + titleStyled + implicitAnnotation
+}
+
+func truncateDisplayWidth(s string, maxWidth int) string {
+	if maxWidth <= 0 {
+		return s
+	}
+	if lipgloss.Width(s) <= maxWidth {
+		return s
+	}
+	if maxWidth <= 3 {
+		return sliceDisplayWidth(s, maxWidth)
+	}
+	return sliceDisplayWidth(s, maxWidth-3) + "..."
+}
+
+func sliceDisplayWidth(s string, maxWidth int) string {
+	if maxWidth <= 0 {
+		return ""
+	}
+	var b strings.Builder
+	width := 0
+	for _, r := range s {
+		rw := lipgloss.Width(string(r))
+		if width+rw > maxWidth {
+			break
+		}
+		b.WriteRune(r)
+		width += rw
+	}
+	return b.String()
 }
