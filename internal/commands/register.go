@@ -9,6 +9,7 @@ func RegisterCoreCommands(root *cobra.Command) {
 	RegisterCheckCmd(root)
 	RegisterCreateCmd(root)
 	RegisterDeleteCmd(root)
+	RegisterEditCmd(root)
 	RegisterInitCmd(root)
 	RegisterListCmd(root)
 	RegisterPrimeCmd(root)
