@@ -740,6 +740,73 @@ func TestIsArchived(t *testing.T) {
 	})
 }
 
+func TestFilteredBeansExcludeArchived(t *testing.T) {
+	core, _ := setupTestCore(t)
+
+	createTestBean(t, core, "act1", "Active Bean", "todo")
+	archivedBean := createTestBean(t, core, "arc1", "Archived Bean", "completed")
+	_ = archivedBean
+	if err := core.Archive("arc1"); err != nil {
+		t.Fatalf("Archive() error = %v", err)
+	}
+
+	t.Run("excludes archived by default", func(t *testing.T) {
+		filter := &Filter{ExcludeArchived: BoolPtr(true)}
+		beans, err := core.FilteredBeans(filter)
+		if err != nil {
+			t.Fatalf("FilteredBeans() error = %v", err)
+		}
+		for _, b := range beans {
+			if b.ID == "arc1" {
+				t.Error("archived bean should be excluded when ExcludeArchived=true")
+			}
+		}
+		if len(beans) != 1 || beans[0].ID != "act1" {
+			t.Errorf("expected only act1, got %v", beanIDs(beans))
+		}
+	})
+
+	t.Run("includes archived when ExcludeArchived is nil", func(t *testing.T) {
+		filter := &Filter{}
+		beans, err := core.FilteredBeans(filter)
+		if err != nil {
+			t.Fatalf("FilteredBeans() error = %v", err)
+		}
+		if len(beans) != 2 {
+			t.Errorf("expected 2 beans, got %d", len(beans))
+		}
+	})
+
+	t.Run("includes archived when ExcludeArchived is false", func(t *testing.T) {
+		filter := &Filter{ExcludeArchived: BoolPtr(false)}
+		beans, err := core.FilteredBeans(filter)
+		if err != nil {
+			t.Fatalf("FilteredBeans() error = %v", err)
+		}
+		if len(beans) != 2 {
+			t.Errorf("expected 2 beans, got %d", len(beans))
+		}
+	})
+
+	t.Run("nil filter includes all", func(t *testing.T) {
+		beans, err := core.FilteredBeans(nil)
+		if err != nil {
+			t.Fatalf("FilteredBeans(nil) error = %v", err)
+		}
+		if len(beans) != 2 {
+			t.Errorf("expected 2 beans, got %d", len(beans))
+		}
+	})
+}
+
+func beanIDs(beans []*bean.Bean) []string {
+	ids := make([]string, len(beans))
+	for i, b := range beans {
+		ids[i] = b.ID
+	}
+	return ids
+}
+
 func TestArchivedBeansAlwaysLoaded(t *testing.T) {
 	core, beansDir := setupTestCore(t)
 

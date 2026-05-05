@@ -717,9 +717,10 @@ type Filter struct {
 	NoBlocking              *bool
 	IsBlocked               *bool
 	ExcludeImplicitTerminal *bool
+	ExcludeArchived         *bool
 }
 
-func boolPtr(b bool) *bool { return &b }
+func BoolPtr(b bool) *bool { return &b }
 
 func (c *Core) FilteredBeans(f *Filter) ([]*bean.Bean, error) {
 	var beans []*bean.Bean
@@ -800,6 +801,11 @@ func (c *Core) matchesFilter(b *bean.Bean, f *Filter) bool {
 	}
 	if f.ExcludeImplicitTerminal != nil && *f.ExcludeImplicitTerminal {
 		if status, _ := c.ImplicitStatus(b.ID); status != "" {
+			return false
+		}
+	}
+	if f.ExcludeArchived != nil && *f.ExcludeArchived {
+		if c.isArchivedPath(b.Path) {
 			return false
 		}
 	}

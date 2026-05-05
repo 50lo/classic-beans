@@ -35,6 +35,7 @@ var (
 	listQuiet       bool
 	listSort        string
 	listFull        bool
+	listAll         bool
 )
 
 var listCmd = &cobra.Command{
@@ -104,6 +105,10 @@ Search Syntax (--search/-S):
 			filter.ExcludeImplicitTerminal = &excludeImplicitTerminal
 		}
 
+		if !listAll {
+			filter.ExcludeArchived = beancore.BoolPtr(true)
+		}
+
 		beans, err := core.FilteredBeans(filter)
 		if err != nil {
 			return fmt.Errorf("querying beans: %w", err)
@@ -128,6 +133,16 @@ Search Syntax (--search/-S):
 		}
 
 		allBeans := core.All()
+
+		if !listAll {
+			var active []*bean.Bean
+			for _, b := range allBeans {
+				if !core.IsArchived(b.ID) {
+					active = append(active, b)
+				}
+			}
+			allBeans = active
+		}
 
 		implicitStatuses := make(map[string]string, len(allBeans))
 		for _, b := range allBeans {
@@ -284,5 +299,6 @@ func RegisterListCmd(root *cobra.Command) {
 	listCmd.Flags().BoolVarP(&listQuiet, "quiet", "q", false, "Only output IDs (one per line)")
 	listCmd.Flags().StringVar(&listSort, "sort", "", "Sort by: created, updated, status, priority, id (default: status, priority, type, title)")
 	listCmd.Flags().BoolVar(&listFull, "full", false, "Include bean body in JSON output")
+	listCmd.Flags().BoolVarP(&listAll, "all", "a", false, "Include archived beans")
 	root.AddCommand(listCmd)
 }
