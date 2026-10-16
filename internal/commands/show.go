@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/charmbracelet/glamour"
@@ -139,14 +140,21 @@ func showStyledBean(b *bean.Bean) {
 		header.WriteString("  ")
 		header.WriteString(ui.Muted.Render("updated " + b.UpdatedAt.Format("2006-01-02 15:04 UTC")))
 	}
+	if relationships := formatRelationships(b); relationships != "" {
+		header.WriteString("\n")
+		header.WriteString(relationships)
+	}
+
+	header.WriteString("\n")
+	header.WriteString(ui.Muted.Render(strings.Repeat("─", 50)))
 	header.WriteString("\n")
 	header.WriteString(ui.Title.Render(b.Title))
 
-	if b.Parent != "" || len(b.Blocking) > 0 {
+	if b.Parent != "" {
 		header.WriteString("\n")
 		header.WriteString(ui.Muted.Render(strings.Repeat("─", 50)))
 		header.WriteString("\n")
-		header.WriteString(formatRelationships(b))
+		header.WriteString(ui.Muted.Render("parent:") + " " + ui.ID.Render(b.Parent))
 	}
 
 	header.WriteString("\n")
@@ -181,17 +189,30 @@ func showStyledBean(b *bean.Bean) {
 func formatRelationships(b *bean.Bean) string {
 	var parts []string
 
-	if b.Parent != "" {
-		parts = append(parts, fmt.Sprintf("%s %s",
-			ui.Muted.Render("parent:"),
-			ui.ID.Render(b.Parent)))
+	blockedBy := slices.Clone(b.BlockedBy)
+	blocks := slices.Clone(b.Blocking)
+	for _, link := range core.FindIncomingLinks(b.ID) {
+		switch link.LinkType {
+		case "blocking":
+			blockedBy = append(blockedBy, link.FromBean.ID)
+		case "blocked_by":
+			blocks = append(blocks, link.FromBean.ID)
+		}
 	}
 
-	for _, target := range b.Blocking {
-		parts = append(parts, fmt.Sprintf("%s %s",
-			ui.Muted.Render("blocking:"),
-			ui.ID.Render(target)))
+	appendList := func(label string, ids []string) {
+		if len(ids) == 0 {
+			return
+		}
+		slices.Sort(ids)
+		ids = slices.Compact(ids)
+		for i, id := range ids {
+			ids[i] = ui.ID.Render(id)
+		}
+		parts = append(parts, ui.Muted.Render(label)+" "+strings.Join(ids, ", "))
 	}
+	appendList("Blocks:", blocks)
+	appendList("Blocked by:", blockedBy)
 	return strings.Join(parts, "\n")
 }
 
