@@ -2,14 +2,11 @@
 
 This project uses **beans**, an agentic-first issue tracker. Issues are called "beans", and you can use the "beans" CLI to manage them.
 
-All commands support `--json` for machine-readable output. Use this flag to parse responses easily.
-
 ## Track All Work With Beans
 
-User wants you to use beans instead of any other tools you have for **all** work tracking.
+User wants you to use beans for work tracking.
 
-Before starting any task:
-
+Typical workflow:
 - First: Check if there already is an existing bean about this work. If there isn't, create a bean with `beans create "Title" -t <type> -d "Description..." -s in-progress`
 - Then: Do the work, and keep the bean's todo items current (check off what has been done, as it happens; `- [ ]` → `- [x]`)
 - Finally: Only if the bean has no unchecked todo items left, mark it completed with `beans update <bean-id> -s completed`.
@@ -27,48 +24,42 @@ When the user asks what to work on next:
 
 ```bash
 # Find beans ready to start (not blocked, excludes in-progress/completed/scrapped/draft)
-beans list --json --ready
+beans list --ready
 
 # View full details of specific beans (supports multiple IDs)
-beans show --json <id> [id...]
+beans show <id> [id...]
 ```
 
 ## CLI Commands
 
 ```bash
 # List beans
-beans list --json                      # All beans
-beans list --json --ready              # Beans ready to start (not blocked, excludes in-progress/completed/scrapped/draft)
-beans list --json -t bug -s todo       # Filter by type and status
-beans list --json -S "authentication"  # Full-text search
-beans list --help                      # Full options
+beans list                      # All beans
+beans list --ready              # Beans ready to start (not blocked, excludes in-progress/completed/scrapped/draft)
+beans list -t epic -s todo      # Filter by type and status
+beans list -S "authentication"  # Full-text search
 
 # View beans (supports multiple IDs)
 beans show --json <id> [id...]
 
 # Create a bean (always specify -t type)
-beans create --json "Title" -t task -d "Description..." -s todo
+beans create "Title" -t task -d "Description..." -s todo
 
 # Update a bean (metadata, body, or both)
-beans update --json <id> -s in-progress                        # Change status
-beans update --json <id> --parent <other-id>                   # Set parent relationship
-beans update --json <id> --blocking <other-id>                 # Mark as blocking another bean
-beans update --json <id> --blocked-by <other-id>               # Mark as blocked by another bean
-beans update --json <id> --body-replace-old "old" --body-replace-new "new"  # Replace text
-beans update --json <id> --body-append "## Notes"              # Append to body
-beans update --json <id> -s completed --body-replace-old "- [ ] Task" --body-replace-new "- [x] Task"  # Combined
-
-# Archive completed/scrapped beans (only when user requests)
-beans archive
+beans update <id> -s in-progress                        # Change status
+beans update <id> --parent <other-id>                   # Set parent relationship
+beans update <id> --blocked-by <other-id>               # Mark as blocked by another bean
+beans update <id> --body-append "## Notes"              # Append to body
+beans update <id> -s completed --body-replace-old "- [ ] Task 1" --body-replace-new "- [x] Task 1"  # Combine multiple options
 ```
 
-Use `beans <command> --help` for full options. Use `--json` for machine-readable output.
+Use `beans <command> --help` for full options.
 
 ## Relationships
 
 - **Parent**: Hierarchy (milestone → epic → feature → task/bug). Set with `--parent <id>`.
-- **Blocking**: Use `--blocking <id>` when THIS bean blocks another (the other bean can't proceed until this is done).
 - **Blocked-by**: Use `--blocked-by <id>` when THIS bean is blocked by another (this bean can't proceed until the other is done). **Prefer this when creating dependent work.**
+- **Blocking**: Use `--blocking <id>` when THIS bean blocks another (the other bean can't proceed until this is done).
 - **Implicit blocking**: A bean is also considered blocked if any of its ancestors (via parent chain) are blocked. Commands like `ready` respect this automatically.
 - **Implicit status**: If a parent/ancestor has a terminal status (scrapped or completed), children inherit that status implicitly. `ready` excludes these beans.
 
@@ -106,27 +97,8 @@ beans update <id> --body-replace-old "- [ ] Task 1" --body-replace-new "- [x] Ta
 - Errors if text not found or found multiple times
 - Use empty string to delete the matched text
 
-**Append content:**
+**Alternative way to append content:**
 ```bash
-beans update <id> --body-append "## Notes\n\nAdded content"
 echo "Multi-line content" | beans update <id> --body-append -
 ```
 - Adds text to end of body with blank line separator
-- Use `-` to read from stdin
-
-**Combined with metadata changes:**
-```bash
-beans update <id> \
-  --body-replace-old "- [ ] Deploy to prod" --body-replace-new "- [x] Deploy to prod" \
-  --status completed
-```
-
-## Concurrency Control
-
-Use etags with `--if-match`:
-```bash
-ETAG=$(beans show <id> --etag-only)
-beans update <id> --if-match "$ETAG" ...
-```
-
-On conflict, returns an error with the current etag.
