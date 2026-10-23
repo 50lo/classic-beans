@@ -130,10 +130,11 @@ func TestShowRelationships(t *testing.T) {
 			if tt.want != "" {
 				wantHeader += tt.want + "\n"
 			}
-			wantHeader += separator + "\nTest bean\n" + separator + "\n"
+			wantHeader += separator + "\n"
 			if tt.bean.Parent != "" {
 				wantHeader += "parent: " + tt.bean.Parent + "\n" + separator + "\n"
 			}
+			wantHeader += "Test bean\n" + separator + "\n"
 			if !strings.HasPrefix(strings.Join(lines, "\n"), wantHeader) {
 				t.Errorf("show output has incorrect header layout, want prefix %q:\n%s", wantHeader, got)
 			}

@@ -144,18 +144,16 @@ func showStyledBean(b *bean.Bean) {
 		header.WriteString("\n")
 		header.WriteString(relationships)
 	}
-
 	header.WriteString("\n")
 	header.WriteString(ui.Muted.Render(strings.Repeat("─", 50)))
-	header.WriteString("\n")
-	header.WriteString(ui.Title.Render(b.Title))
-
 	if b.Parent != "" {
 		header.WriteString("\n")
-		header.WriteString(ui.Muted.Render(strings.Repeat("─", 50)))
-		header.WriteString("\n")
 		header.WriteString(ui.Muted.Render("parent:") + " " + ui.ID.Render(b.Parent))
+		header.WriteString("\n")
+		header.WriteString(ui.Muted.Render(strings.Repeat("─", 50)))
 	}
+	header.WriteString("\n")
+	header.WriteString(ui.Title.Render(b.Title))
 
 	header.WriteString("\n")
 	header.WriteString(ui.Muted.Render(strings.Repeat("─", 50)))
