@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (

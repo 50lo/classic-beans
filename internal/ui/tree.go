@@ -1,11 +1,13 @@
+// Modified for Classic Beans.
+
 package ui
 
 import (
 	"strings"
 
+	"github.com/50lo/classic-beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/config"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/config"
 )
 
 // TreeNode represents a node in the bean tree hierarchy.

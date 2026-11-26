@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
@@ -5,11 +7,11 @@ import (
 	"slices"
 	"strings"
 
+	"github.com/50lo/classic-beans/internal/output"
+	"github.com/50lo/classic-beans/internal/ui"
+	"github.com/50lo/classic-beans/pkg/bean"
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hmans/beans/internal/output"
-	"github.com/hmans/beans/internal/ui"
-	"github.com/hmans/beans/pkg/bean"
 	"github.com/spf13/cobra"
 )
 

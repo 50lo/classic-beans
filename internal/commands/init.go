@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
@@ -5,9 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/hmans/beans/internal/output"
-	"github.com/hmans/beans/pkg/beancore"
-	"github.com/hmans/beans/pkg/config"
+	"github.com/50lo/classic-beans/internal/output"
+	"github.com/50lo/classic-beans/pkg/beancore"
+	"github.com/50lo/classic-beans/pkg/config"
 	"github.com/spf13/cobra"
 )
 

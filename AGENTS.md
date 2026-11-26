@@ -1,6 +1,6 @@
 # Beans Agent Guide
 
-Beans is a CLI-first issue tracker. Issues are markdown files under `.beans/`, managed via the `beans` CLI for creating, listing, updating, querying, and archiving beans.
+Classic Beans is a CLI issue tracker. Issues are Markdown files under `.beans/`, managed via the `cbeans` CLI.
 
 ## Intent Layer
 
@@ -21,7 +21,7 @@ Keep new guidance at the least common ancestor that covers it. Avoid duplicating
 - Build: `mise build`
 - Run all tests: `mise test`
 - Run Go tests directly: `go test ./...`
-- Run the CLI through mise: `mise beans`
+- Run the CLI through mise: `mise cbeans`
 
 For read-only CLI checks, this repo's own `.beans/` data is fine. For write tests, create a separate temporary project or use `--beans-path`.
 

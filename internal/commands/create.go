@@ -1,13 +1,15 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
 	"fmt"
 	"strings"
 
-	"github.com/hmans/beans/internal/output"
-	"github.com/hmans/beans/internal/ui"
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/config"
+	"github.com/50lo/classic-beans/internal/output"
+	"github.com/50lo/classic-beans/internal/ui"
+	"github.com/50lo/classic-beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/config"
 	"github.com/spf13/cobra"
 )
 

@@ -1,10 +1,12 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
 	"fmt"
 
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/internal/output"
+	"github.com/50lo/classic-beans/internal/output"
+	"github.com/50lo/classic-beans/pkg/bean"
 	"github.com/spf13/cobra"
 )
 

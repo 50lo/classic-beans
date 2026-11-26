@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
@@ -11,7 +13,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/hmans/beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/bean"
 	"github.com/spf13/cobra"
 )
 

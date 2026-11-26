@@ -1,10 +1,12 @@
+// Modified for Classic Beans.
+
 package beancore
 
 import (
 	"fmt"
 	"strings"
 
-	"github.com/hmans/beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/bean"
 )
 
 // IncomingLink represents a link from another bean to a target bean.

@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/beancore"
-	"github.com/hmans/beans/pkg/config"
+	"github.com/50lo/classic-beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/beancore"
+	"github.com/50lo/classic-beans/pkg/config"
 )
 
 func setupShowTest(t *testing.T, beans ...*bean.Bean) {

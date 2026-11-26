@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
@@ -5,7 +7,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/hmans/beans/pkg/config"
+	"github.com/50lo/classic-beans/pkg/config"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +23,7 @@ type promptData struct {
 var primeCmd = &cobra.Command{
 	Use:   "prime",
 	Short: "Output instructions for AI coding agents",
-	Long:  `Outputs a prompt that primes AI coding agents on how to use the beans CLI to manage project issues.`,
+	Long:  `Outputs instructions for coding agents on how to manage project issues with cbeans.`,
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if beansPath == "" && configPath == "" {
@@ -46,7 +48,7 @@ var primeCmd = &cobra.Command{
 			Priorities: config.DefaultPriorities,
 		}
 
-		return tmpl.Execute(os.Stdout, data)
+		return tmpl.Execute(cmd.OutOrStdout(), data)
 	},
 }
 

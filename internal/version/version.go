@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package version
 
 import "fmt"
@@ -11,5 +13,5 @@ var (
 
 // String returns a formatted version string.
 func String() string {
-	return fmt.Sprintf("beans %s (%s) built %s", Version, Commit, Date)
+	return fmt.Sprintf("cbeans %s (%s) built %s", Version, Commit, Date)
 }

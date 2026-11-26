@@ -1,49 +1,36 @@
-**Beans is an issue tracker for you and your coding agents.** Instead of tracking tasks in a separate application, Beans stores them right alongside your code. 
+# Classic Beans
 
-This fork of beans is called **Classic Beans** - I made it because I needed a stable verison of beans. 
-Key differences from the original beans project:
-- no TUI
-- no Web UI
-- no GraphQL
+<img src="assets/classic-beans.png" alt="A retro tin can labeled Classic Beans" width="200">
+
+Classic Beans is a command-line issue tracker that stores issues as Markdown files alongside your code. I forked [Hendrik Mans’s Beans](https://github.com/hmans/beans) to keep the CLI I use every day. Classic Beans removes the web UI, TUI, GraphQL API, and worktree management. It adds an `edit` command, hides archived beans in `list` by default, and shows blockers in plain-text output.
 
 ## Installation
 
-We'll need to do three things:
-
-1. Install the `beans` CLI tool.
-2. Configure your project to use it.
-3. Configure your coding agent to interact with it.
-
-Install directly via Go:
+With Go 1.24.6 or later installed, run the following command.
 
 ```bash
-go install github.com/50lo/beans@latest
+go install github.com/50lo/classic-beans/cmd/cbeans@latest
 ```
+
+Go installs `cbeans` into `$GOBIN` or, by default, `$(go env GOPATH)/bin`. Add that directory to your `PATH` if needed.
 
 ## Configure Your Project
 
-Inside the root directory of your project, run:
+Run `cbeans init` at the root of a new project. For an existing Beans project, run `cbeans list` to use its `.beans/` directory and `.beans.yml` as they are.
 
 ```bash
-beans init
+cbeans init
+cbeans help
 ```
 
-This will create a `.beans/` directory and a `.beans.yml` configuration file at the project root. All of it is meant to be tracked in your version control system.
-
-From this point onward, you can interact with your Beans through the `beans` CLI. To get a list of available commands:
-
-```bash
-beans help
-```
-
-But more importantly, you'll want to get your coding agent set up to use it. Let's dive in!
+Track `.beans/` and `.beans.yml` in version control alongside your code.
 
 ## Agent Configuration
 
-The most basic way to teach your agent about Beans is to simply add the following instruction to your `AGENTS.md`, `CLAUDE.md`, or equivalent file:
+Add this instruction to your `AGENTS.md`, `CLAUDE.md`, or equivalent file. If you already have an instruction for `beans prime`, change it to `cbeans prime`.
 
 ```
-**IMPORTANT**: before you do anything else, run the `beans prime` command and heed its output.
+Before you do anything else, run `cbeans prime` and follow its instructions.
 ```
 
 ## Example Workflows
@@ -83,9 +70,9 @@ When making a commit, include the relevant bean IDs in the commit message
 
 ## Contributing
 
-This project (the fork) does not accept contributions because the goal is to keep classic beans CLI behaviour.
+I maintain Classic Beans for my own use and am keeping contributions closed.
 
 ## License
 
-This project is licensed under the Apache-2.0 License (same as the original project). See the [LICENSE](LICENSE) file for details.
+Classic Beans is based on [Beans at `db0ab13`](https://github.com/hmans/beans/commit/db0ab1391952754e53861e04419158fcf5d2be83). The fork preserves the upstream commit history. See the [fork changes](https://github.com/50lo/classic-beans/compare/db0ab1391952754e53861e04419158fcf5d2be83...main) and the [Apache-2.0 license](LICENSE).
 

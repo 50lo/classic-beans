@@ -1,3 +1,5 @@
+# Modified for Classic Beans.
+
 [tools]
 go = "latest"
 svu = "latest"
@@ -20,19 +22,20 @@ run = "go test ./..."
 [tasks.build]
 run = """
 LDFLAGS="\
-  -X github.com/hmans/beans/internal/version.Version=$(git describe --tags --always --dirty 2>/dev/null || echo dev) \
-  -X github.com/hmans/beans/internal/version.Commit=$(git rev-parse --short HEAD 2>/dev/null || echo unknown) \
-  -X github.com/hmans/beans/internal/version.Date=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-go build -ldflags "$LDFLAGS" -o beans ./cmd/beans
+  -X github.com/50lo/classic-beans/internal/version.Version=$(git describe --tags --always --dirty 2>/dev/null || echo dev) \
+  -X github.com/50lo/classic-beans/internal/version.Commit=$(git rev-parse --short HEAD 2>/dev/null || echo unknown) \
+  -X github.com/50lo/classic-beans/internal/version.Date=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+go build -ldflags "$LDFLAGS" -o cbeans ./cmd/cbeans
 """
 
-[tasks.beans]
-description = "Build and run the beans CLI"
-run = "go run ./cmd/beans"
+[tasks.cbeans]
+alias = "beans"
+description = "Build and run the Classic Beans CLI"
+run = "go run ./cmd/cbeans"
 
 [tasks.install]
 depends = "build"
-run = "cp beans ~/bin/beans"
+run = "cp cbeans ~/bin/cbeans"
 
 [tasks."release:patch"]
 description = "Create a patch version tag (e.g., v0.1.4 → v0.1.5)"

@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package output
 
 import (
@@ -5,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/hmans/beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/bean"
 )
 
 // Error codes for JSON responses

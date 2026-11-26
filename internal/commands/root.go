@@ -1,11 +1,13 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
 	"fmt"
 	"os"
 
-	"github.com/hmans/beans/pkg/beancore"
-	"github.com/hmans/beans/pkg/config"
+	"github.com/50lo/classic-beans/pkg/beancore"
+	"github.com/50lo/classic-beans/pkg/config"
 	"github.com/spf13/cobra"
 )
 
@@ -18,11 +20,9 @@ var configPath string
 // and core initialization logic.
 func NewRootCmd() *cobra.Command {
 	rootCmd := &cobra.Command{
-		Use:   "beans",
-		Short: "A file-based issue tracker for AI-first workflows",
-		Long: `Beans is a lightweight issue tracker that stores issues as markdown files.
-Track your work alongside your code and supercharge your coding agent with
-a full view of your project.`,
+		Use:   "cbeans",
+		Short: "Classic Beans, a file-based issue tracker",
+		Long:  "Classic Beans stores issues as Markdown files alongside your code.",
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 			// Skip core initialization for init, prime, and version commands
 			if cmd.Name() == "init" || cmd.Name() == "prime" || cmd.Name() == "version" {
@@ -72,8 +72,6 @@ a full view of your project.`,
 // Precedence: --beans-path flag > BEANS_PATH env var > config default.
 //
 // In worktrees, the CLI uses the worktree's local .beans/ directory.
-// beans-serve watches worktree .beans/ dirs and merges changes into
-// runtime state, so the UI stays up-to-date without writing to main.
 func resolveBeansPath(flagPath string, c *config.Config) (string, error) {
 	explicitOverride := flagPath != "" || os.Getenv("BEANS_PATH") != ""
 
@@ -90,7 +88,7 @@ func resolveBeansPath(flagPath string, c *config.Config) (string, error) {
 		if explicitOverride {
 			return "", fmt.Errorf("beans path does not exist or is not a directory: %s", root)
 		}
-		return "", fmt.Errorf("no .beans directory found at %s (run 'beans init' to create one)", root)
+		return "", fmt.Errorf("no .beans directory found at %s (run 'cbeans init' to create one)", root)
 	}
 
 	return root, nil

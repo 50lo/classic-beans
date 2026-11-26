@@ -1,11 +1,13 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
 	"testing"
 	"time"
 
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/config"
+	"github.com/50lo/classic-beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/config"
 )
 
 func TestSortBeans(t *testing.T) {

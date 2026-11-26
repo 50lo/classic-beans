@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
@@ -6,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/internal/output"
+	"github.com/50lo/classic-beans/internal/output"
+	"github.com/50lo/classic-beans/pkg/bean"
 )
 
 // resolveContent returns content from a direct value or file flag.

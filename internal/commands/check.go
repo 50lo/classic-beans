@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
@@ -5,10 +7,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/50lo/classic-beans/internal/ui"
+	"github.com/50lo/classic-beans/pkg/beancore"
+	"github.com/50lo/classic-beans/pkg/config"
 	"github.com/spf13/cobra"
-	"github.com/hmans/beans/pkg/beancore"
-	"github.com/hmans/beans/pkg/config"
-	"github.com/hmans/beans/internal/ui"
 )
 
 var (

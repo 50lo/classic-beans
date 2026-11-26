@@ -1,15 +1,16 @@
-# Beans Usage Guide for Agents
+{{/* Modified for Classic Beans. */ -}}
+# Classic Beans Usage Guide for Agents
 
-This project uses **beans**, an agentic-first issue tracker. Issues are called "beans", and you can use the "beans" CLI to manage them.
+This project uses **Classic Beans** for issue tracking. Issues are called beans. Use the `cbeans` CLI to manage them.
 
 ## Track All Work With Beans
 
 User wants you to use beans for work tracking.
 
 Typical workflow:
-- First: Check if there already is an existing bean about this work. If there isn't, create a bean with `beans create "Title" -t <type> -d "Description..." -s in-progress`
+- First: Check if there already is an existing bean about this work. If there isn't, create a bean with `cbeans create "Title" -t <type> -d "Description..." -s in-progress`
 - Then: Do the work, and keep the bean's todo items current (check off what has been done, as it happens; `- [ ]` → `- [x]`)
-- Finally: Only if the bean has no unchecked todo items left, mark it completed with `beans update <bean-id> -s completed`.
+- Finally: Only if the bean has no unchecked todo items left, mark it completed with `cbeans update <bean-id> -s completed`.
 - When comitting: Include both code changes AND bean file(s) in the commit
 
 After finishing any task:
@@ -24,36 +25,36 @@ When the user asks what to work on next:
 
 ```bash
 # Find beans ready to start (not blocked, excludes in-progress/completed/scrapped/draft)
-beans list --ready
+cbeans list --ready
 
 # View full details of specific beans (supports multiple IDs)
-beans show <id> [id...]
+cbeans show <id> [id...]
 ```
 
 ## CLI Commands
 
 ```bash
 # List beans
-beans list                      # All beans
-beans list --ready              # Beans ready to start (not blocked, excludes in-progress/completed/scrapped/draft)
-beans list -t epic -s todo      # Filter by type and status
-beans list -S "authentication"  # Full-text search
+cbeans list                      # All beans
+cbeans list --ready              # Beans ready to start (not blocked, excludes in-progress/completed/scrapped/draft)
+cbeans list -t epic -s todo      # Filter by type and status
+cbeans list -S "authentication"  # Full-text search
 
 # View beans (supports multiple IDs)
-beans show --json <id> [id...]
+cbeans show --json <id> [id...]
 
 # Create a bean (always specify -t type)
-beans create "Title" -t task -d "Description..." -s todo
+cbeans create "Title" -t task -d "Description..." -s todo
 
 # Update a bean (metadata, body, or both)
-beans update <id> -s in-progress                        # Change status
-beans update <id> --parent <other-id>                   # Set parent relationship
-beans update <id> --blocked-by <other-id>               # Mark as blocked by another bean
-beans update <id> --body-append "## Notes"              # Append to body
-beans update <id> -s completed --body-replace-old "- [ ] Task 1" --body-replace-new "- [x] Task 1"  # Combine multiple options
+cbeans update <id> -s in-progress                        # Change status
+cbeans update <id> --parent <other-id>                   # Set parent relationship
+cbeans update <id> --blocked-by <other-id>               # Mark as blocked by another bean
+cbeans update <id> --body-append "## Notes"              # Append to body
+cbeans update <id> -s completed --body-replace-old "- [ ] Task 1" --body-replace-new "- [x] Task 1"  # Combine multiple options
 ```
 
-Use `beans <command> --help` for full options.
+Use `cbeans <command> --help` for full options.
 
 ## Relationships
 
@@ -88,17 +89,17 @@ Beans without a priority are treated as `normal` priority for sorting purposes.
 
 ## Modifying Bean Body Content
 
-Use `beans update` to modify body content along with metadata changes:
+Use `cbeans update` to modify body content along with metadata changes:
 
 **Replace text (exact match, must occur exactly once):**
 ```bash
-beans update <id> --body-replace-old "- [ ] Task 1" --body-replace-new "- [x] Task 1"
+cbeans update <id> --body-replace-old "- [ ] Task 1" --body-replace-new "- [x] Task 1"
 ```
 - Errors if text not found or found multiple times
 - Use empty string to delete the matched text
 
 **Alternative way to append content:**
 ```bash
-echo "Multi-line content" | beans update <id> --body-append -
+echo "Multi-line content" | cbeans update <id> --body-append -
 ```
 - Adds text to end of body with blank line separator

@@ -1,13 +1,47 @@
+// Modified for Classic Beans.
+
 package commands
 
 import (
+	"bytes"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
-	"github.com/hmans/beans/pkg/config"
+	"github.com/50lo/classic-beans/pkg/config"
 )
+
+func TestClassicBeansCommandName(t *testing.T) {
+	t.Chdir(t.TempDir())
+	if err := os.WriteFile(".beans.yml", []byte("beans:\n  path: .beans\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	for _, tc := range []struct {
+		arg  string
+		want string
+	}{
+		{"--help", "cbeans [command]"},
+		{"version", "cbeans "},
+		{"prime", "`cbeans create"},
+	} {
+		t.Run(tc.arg, func(t *testing.T) {
+			root := NewRootCmd()
+			RegisterVersionCmd(root)
+			RegisterPrimeCmd(root)
+			var output bytes.Buffer
+			root.SetOut(&output)
+			root.SetArgs([]string{tc.arg})
+			if err := root.Execute(); err != nil {
+				t.Fatal(err)
+			}
+			if !strings.Contains(output.String(), tc.want) {
+				t.Fatalf("expected output to contain %q, got %q", tc.want, output.String())
+			}
+		})
+	}
+}
 
 func TestResolveBeansPath(t *testing.T) {
 	// Create a valid beans directory for tests that need one
@@ -108,8 +142,8 @@ func TestResolveBeansPath(t *testing.T) {
 		if err == nil {
 			t.Fatal("expected error for invalid config path, got nil")
 		}
-		if !strings.Contains(err.Error(), "beans init") {
-			t.Errorf("expected error to suggest 'beans init', got %q", err.Error())
+		if !strings.Contains(err.Error(), "'cbeans init'") {
+			t.Errorf("expected error to suggest 'cbeans init', got %q", err.Error())
 		}
 	})
 

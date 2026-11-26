@@ -1,16 +1,15 @@
+// Modified for Classic Beans.
+
 package ui
 
 import (
-	"path/filepath"
 	"regexp"
-	"sort"
 	"strings"
 	"testing"
 
+	"github.com/50lo/classic-beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/config"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/beancore"
-	"github.com/hmans/beans/pkg/config"
 )
 
 func TestBuildTree(t *testing.T) {
@@ -276,57 +275,8 @@ func TestRenderTreeHeaderAlignment(t *testing.T) {
 	})
 }
 
-func TestRenderTreeHeaderAlignmentWithTmpFixtureData(t *testing.T) {
-	fixtureRoot := filepath.Join("..", "..", "tmp", ".beans")
-	testCfg := config.Default()
-	core := beancore.New(fixtureRoot, testCfg)
-	if err := core.Load(); err != nil {
-		t.Fatalf("loading tmp fixture beans: %v", err)
-	}
-
-	parentID := "fp-6qkk"
-	matched, err := core.FilteredBeans(&beancore.Filter{ParentID: &parentID})
-	if err != nil {
-		t.Fatalf("filtering tmp fixture beans: %v", err)
-	}
-
-	allBeans := core.All()
-	implicitStatuses := make(map[string]string, len(allBeans))
-	for _, b := range allBeans {
-		if status, _ := core.ImplicitStatus(b.ID); status != "" {
-			implicitStatuses[b.ID] = status
-		}
-	}
-
-	sortFn := func(beans []*bean.Bean) {
-		bean.SortByStatusPriorityAndType(beans, testCfg.StatusNames(), testCfg.PriorityNames(), testCfg.TypeNames())
-		sort.SliceStable(beans, func(i, j int) bool {
-			return beans[i].ID < beans[j].ID
-		})
-	}
-
-	tree := BuildTree(matched, allBeans, sortFn, implicitStatuses)
-
-	maxIDWidth := 2
-	for _, b := range allBeans {
-		if len(b.ID) > maxIDWidth {
-			maxIDWidth = len(b.ID)
-		}
-	}
-	maxIDWidth += 2
-
-	hasTags := false
-	for _, b := range matched {
-		if len(b.Tags) > 0 {
-			hasTags = true
-			break
-		}
-	}
-	if !hasTags {
-		t.Fatal("expected tmp fixture subtree to include tagged matched beans")
-	}
-
-	output := stripANSI(RenderTree(tree, testCfg, maxIDWidth, hasTags, 180))
+func TestRenderTreeNestedHeaderAlignment(t *testing.T) {
+	output := stripANSI(RenderTree(taggedTreeFixture(), config.Default(), 12, true, 180))
 	lines := strings.Split(strings.TrimRight(output, "\n"), "\n")
 	if len(lines) < 4 {
 		t.Fatalf("expected multiple rendered lines, got %d", len(lines))
@@ -339,62 +289,27 @@ func TestRenderTreeHeaderAlignmentWithTmpFixtureData(t *testing.T) {
 		t.Fatalf("expected TITLE and TAGS headers, got %q", header)
 	}
 
-	rootRow := findRenderedRow(t, lines[2:], "fp-6qkk")
-	phaseERow := findRenderedRow(t, lines[2:], "fp-4qw6")
-	bugRow := findRenderedRow(t, lines[2:], "fp-j9jk")
+	rootRow := findRenderedRow(t, lines[2:], "beans-a1")
+	taskRow := findRenderedRow(t, lines[2:], "beans-a2")
+	bugRow := findRenderedRow(t, lines[2:], "beans-a3")
 
-	if got := displayIndex(rootRow, "v4 source-host runtime and webhook refactor"); got != titleCol {
+	if got := displayIndex(rootRow, "Import issues from Markdown"); got != titleCol {
 		t.Fatalf("root title misaligned: title index=%d want %d\nrow=%q", got, titleCol, rootRow)
 	}
-	if got := displayIndex(phaseERow, " design-rev"); got != tagsCol {
-		t.Fatalf("phase E tag misaligned: tag index=%d want %d\nrow=%q", got, tagsCol, phaseERow)
+	if got := displayIndex(taskRow, " design "); got != tagsCol {
+		t.Fatalf("task tag misaligned: tag index=%d want %d\nrow=%q", got, tagsCol, taskRow)
 	}
-	if got := displayIndex(bugRow, " code-review"); got != tagsCol {
+	if got := displayIndex(bugRow, " review "); got != tagsCol {
 		t.Fatalf("bug tag misaligned: tag index=%d want %d\nrow=%q", got, tagsCol, bugRow)
 	}
 }
 
 func TestRenderTreeTaggedRowsStayWithinPaneWidth(t *testing.T) {
-	fixtureRoot := filepath.Join("..", "..", "tmp", ".beans")
-	testCfg := config.Default()
-	core := beancore.New(fixtureRoot, testCfg)
-	if err := core.Load(); err != nil {
-		t.Fatalf("loading tmp fixture beans: %v", err)
-	}
-
-	parentID := "fp-3i6d"
-	matched, err := core.FilteredBeans(&beancore.Filter{ParentID: &parentID})
-	if err != nil {
-		t.Fatalf("filtering tmp fixture beans: %v", err)
-	}
-
-	allBeans := core.All()
-	implicitStatuses := make(map[string]string, len(allBeans))
-	for _, b := range allBeans {
-		if status, _ := core.ImplicitStatus(b.ID); status != "" {
-			implicitStatuses[b.ID] = status
-		}
-	}
-
-	sortFn := func(beans []*bean.Bean) {
-		bean.SortByStatusPriorityAndType(beans, testCfg.StatusNames(), testCfg.PriorityNames(), testCfg.TypeNames())
-	}
-
-	tree := BuildTree(matched, allBeans, sortFn, implicitStatuses)
-
-	maxIDWidth := 2
-	for _, b := range allBeans {
-		if len(b.ID) > maxIDWidth {
-			maxIDWidth = len(b.ID)
-		}
-	}
-	maxIDWidth += 2
-
 	const paneWidth = 145
-	output := stripANSI(RenderTree(tree, testCfg, maxIDWidth, true, paneWidth))
+	output := stripANSI(RenderTree(taggedTreeFixture(), config.Default(), 12, true, paneWidth))
 	lines := strings.Split(strings.TrimRight(output, "\n"), "\n")
-	if len(lines) < 3 {
-		t.Fatalf("expected rendered output, got %d lines", len(lines))
+	if len(lines) < 5 {
+		t.Fatalf("expected header and three rendered rows, got %d lines", len(lines))
 	}
 
 	for _, line := range lines {
@@ -402,6 +317,18 @@ func TestRenderTreeTaggedRowsStayWithinPaneWidth(t *testing.T) {
 			t.Fatalf("line exceeds safe pane width: got %d want <= %d\nline=%q", width, paneWidth-1, line)
 		}
 	}
+}
+
+func taggedTreeFixture() []*TreeNode {
+	parent := &bean.Bean{ID: "beans-a1", Title: "Import issues from Markdown", Type: "epic", Status: "in-progress"}
+	task := &bean.Bean{
+		ID: "beans-a2", Type: "task", Status: "todo", Parent: parent.ID, Tags: []string{"design"},
+		Title: "Preserve old issue IDs, parent links, metadata, and all discussion when importing Markdown files from an archived project",
+	}
+	bug := &bean.Bean{
+		ID: "beans-a3", Title: "Skip unreadable files", Type: "bug", Status: "todo", Parent: parent.ID, Tags: []string{"review"},
+	}
+	return BuildTree([]*bean.Bean{task, bug}, []*bean.Bean{parent, task, bug}, func([]*bean.Bean) {}, nil)
 }
 
 var ansiPattern = regexp.MustCompile(`\x1b\[[0-9;]*m`)

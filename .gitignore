@@ -1,4 +1,7 @@
+# Modified for Classic Beans.
+
 /beans
+/cbeans
 /beans-serve
 /beans-tui
 /.vscode/settings.json

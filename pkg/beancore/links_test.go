@@ -1,9 +1,11 @@
+// Modified for Classic Beans.
+
 package beancore
 
 import (
 	"testing"
 
-	"github.com/hmans/beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/bean"
 )
 
 func TestFindIncomingLinks(t *testing.T) {

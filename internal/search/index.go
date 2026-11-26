@@ -1,10 +1,12 @@
+// Modified for Classic Beans.
+
 // Package search provides full-text search functionality for beans using Bleve.
 package search
 
 import (
+	"github.com/50lo/classic-beans/pkg/bean"
 	"github.com/blevesearch/bleve/v2"
 	"github.com/blevesearch/bleve/v2/mapping"
-	"github.com/hmans/beans/pkg/bean"
 )
 
 // Index wraps a Bleve in-memory index for searching beans.

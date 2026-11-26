@@ -1,3 +1,5 @@
+// Modified for Classic Beans.
+
 package beancore
 
 import (
@@ -8,8 +10,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/hmans/beans/pkg/bean"
-	"github.com/hmans/beans/pkg/config"
+	"github.com/50lo/classic-beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/config"
 )
 
 func setupTestCore(t *testing.T) (*Core, string) {

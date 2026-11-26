@@ -1,10 +1,12 @@
+// Modified for Classic Beans.
+
 package beancore
 
 import (
 	"os"
 	"testing"
 
-	"github.com/hmans/beans/pkg/bean"
+	"github.com/50lo/classic-beans/pkg/bean"
 )
 
 func TestSearch(t *testing.T) {

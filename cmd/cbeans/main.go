@@ -1,6 +1,8 @@
+// Modified for Classic Beans.
+
 package main
 
-import "github.com/hmans/beans/internal/commands"
+import "github.com/50lo/classic-beans/internal/commands"
 
 func main() {
 	root := commands.NewRootCmd()
