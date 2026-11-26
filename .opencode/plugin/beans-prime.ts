@@ -3,7 +3,7 @@ import type { Plugin } from '@opencode-ai/plugin';
 /**
  * Beans Prime Plugin for OpenCode
  *
- * This plugin injects the output of `beans prime` into OpenCode's system prompt,
+ * This plugin injects the output of `cbeans prime` into OpenCode's system prompt,
  * giving the AI context about your project's beans (issues/tasks). It runs on:
  *
  * - Chat session start: Adds bean context to the system prompt
@@ -21,22 +21,22 @@ import type { Plugin } from '@opencode-ai/plugin';
  */
 
 export const BeansPrimePlugin: Plugin = async ({ $, directory }) => {
-  // Check if beans CLI exists and project has beans config
+  // Check if cbeans exists and the project has a beans config
   let prime = undefined;
 
   try {
     // Both conditions must be true:
-    // 1. beans CLI is installed
+    // 1. cbeans is installed
     // 2. Project has .beans.yml config
-    const hasBeans = await $`which beans`.quiet();
+    const hasBeans = await $`which cbeans`.quiet();
     const hasConfig = await $`test -f ${directory}/.beans.yml`.quiet();
 
     if (hasBeans.exitCode === 0 && hasConfig.exitCode === 0) {
-      const result = await $`beans prime`.cwd(directory).quiet();
+      const result = await $`cbeans prime`.cwd(directory).quiet();
       prime = result.stdout.toString();
     }
   } catch (e) {
-    // beans not available or not configured - silently skip
+    // cbeans not available or not configured - silently skip
   }
 
   return {
