@@ -53,10 +53,11 @@ var initCmd = &cobra.Command{
 			beansDir = filepath.Join(dir, ".beans")
 			dirName = filepath.Base(dir)
 
-			defaultCfg := config.DefaultWithPrefix(dirName + "-")
-			defaultCfg.Project.Name = dirName
-			defaultCfg.SetConfigDir(projectDir)
-			if err := defaultCfg.Save(projectDir); err != nil {
+			projectCfg := config.Config{
+				Project: config.ProjectConfig{Name: dirName},
+				Beans:   config.DefaultWithPrefix(dirName + "-").Beans,
+			}
+			if err := projectCfg.Save(projectDir); err != nil {
 				if initJSON {
 					return output.Error(output.ErrFileError, err.Error())
 				}

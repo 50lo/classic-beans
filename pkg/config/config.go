@@ -142,8 +142,7 @@ type AgentConfig struct {
 
 // ProjectConfig defines project-level settings.
 type ProjectConfig struct {
-	// Name is the human-readable project name, displayed in the UI.
-	// Default: derived from directory name during `beans init`.
+	// Name is the human-readable project name, derived from the directory during `cbeans init`.
 	Name string `yaml:"name,omitempty"`
 }
 
@@ -381,7 +380,7 @@ func (c *Config) toYAMLNode() *yaml.Node {
 	projectMapping := &yaml.Node{Kind: yaml.MappingNode, Tag: "!!map"}
 	if c.Project.Name != "" {
 		key := strNode("name")
-		key.HeadComment = "Human-readable project name (displayed in the UI)"
+		key.HeadComment = "Human-readable project name"
 		projectMapping.Content = append(projectMapping.Content, key, strNode(c.Project.Name))
 	}
 
@@ -476,7 +475,7 @@ func (c *Config) toYAMLNode() *yaml.Node {
 
 	topMapping.Content = append(topMapping.Content, strNode("beans"), beansMapping)
 
-	if len(worktreeMapping.Content) > 0 {
+	if c.Worktree != (WorktreeConfig{}) {
 		topMapping.Content = append(topMapping.Content, strNode("worktree"), worktreeMapping)
 	}
 

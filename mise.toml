@@ -4,18 +4,6 @@
 go = "latest"
 svu = "latest"
 
-[tasks.setup]
-description = "Set up the project (install all dependencies, generate code)"
-depends = ["deps", "codegen"]
-
-[tasks.deps]
-description = "Install backend dependencies"
-run = "go mod download"
-sources = ["go.mod", "go.sum"]
-
-[tasks.codegen]
-run = "go generate ./..."
-
 [tasks.test]
 run = "go test ./..."
 

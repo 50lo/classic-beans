@@ -2,14 +2,8 @@
 
 /beans
 /cbeans
-/beans-serve
-/beans-tui
 /.vscode/settings.json
 /.worktrees/
-# Added by goreleaser init:
 dist/
 /.docs.local
-# Embedded frontend (generated from frontend/build)
-/internal/web/dist/*
-!/internal/web/dist/.gitkeep
 tmp/
