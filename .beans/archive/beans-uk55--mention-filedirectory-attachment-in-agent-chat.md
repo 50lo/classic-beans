@@ -1,11 +1,11 @@
 ---
 # beans-uk55
 title: '@ mention file/directory attachment in agent chat'
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-21T09:33:57Z
-updated_at: 2026-03-21T09:46:22Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 Allow users to type @ in the agent composer to autocomplete and attach files/directories from the codebase as context. File contents are injected into the prompt sent to Claude Code.
@@ -28,3 +28,9 @@ Implemented @-mention file/directory attachment in the agent chat composer:
 - Selecting a directory replaces the query to drill deeper (keeps dropdown open)
 - Pending attachments shown as removable pills with file/folder icons
 - Attachments are passed through to the GraphQL mutation via the store
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

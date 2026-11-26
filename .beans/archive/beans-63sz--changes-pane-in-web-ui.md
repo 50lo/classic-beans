@@ -1,11 +1,11 @@
 ---
 # beans-63sz
 title: Changes pane in web UI
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T20:39:30Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzw
 ---
 
@@ -34,3 +34,9 @@ Add a toggleable Changes pane to the web UI that shows git working tree status â
 - Added toggle button (Material Symbols `difference` icon) in PlanningView and WorkspaceView toolbars
 - Changes and Agent panes share a SplitPane so dragging their separator resizes both
 - Persisted toggle state via localStorage
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

@@ -1,11 +1,11 @@
 ---
 # beans-xa31
 title: Terminal sessions survive web app reload
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-12T12:32:19Z
-updated_at: 2026-03-12T12:35:55Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Decouple PTY lifecycle from WebSocket lifecycle so terminal sessions persist across page reloads. Add scrollback ring buffer for state replay on reconnect.
@@ -37,3 +37,9 @@ Decouple PTY lifecycle from WebSocket lifecycle so terminal sessions persist acr
 - Added `TestSessionScrollback` — verifies scrollback survives detach/reattach
 - Added `TestGetOrCreateReusesAliveSession` and `TestGetOrCreateReplacesDeadSession`
 - Added `TestSessionAlive` lifecycle test
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

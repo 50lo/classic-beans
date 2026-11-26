@@ -1,11 +1,11 @@
 ---
 # beans-tk4x
 title: Add executeAgentAction mutation
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-11T19:11:47Z
-updated_at: 2026-03-11T19:34:02Z
+updated_at: 2026-11-26T10:52:07Z
 parent: beans-x7bd
 ---
 
@@ -20,3 +20,9 @@ Add a mutation that executes an agent action by ID, mapping it to a prompt and i
 ## Summary of Changes
 
 Added executeAgentAction mutation with resolver that looks up actions from the consolidated registry and injects prompts via AgentMgr.SendMessage. Merged into main repo alongside beans-6hvi.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

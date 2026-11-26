@@ -1,11 +1,11 @@
 ---
 # beans-1rp5
 title: Dual-write bean mutations in git worktrees
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T16:30:31Z
-updated_at: 2026-03-10T17:42:16Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 When running in a secondary git worktree, bean mutations should write to BOTH the main repo's .beans/ (primary) AND the worktree's own .beans/ (mirror). This allows worktree branches to commit bean changes alongside code.
@@ -21,3 +21,9 @@ When running in a secondary git worktree, bean mutations should write to BOTH th
 ## Reverted
 
 Mirror functionality removed — worktree agents should only interact with the main repo's .beans/ (which the existing redirect already handles).
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

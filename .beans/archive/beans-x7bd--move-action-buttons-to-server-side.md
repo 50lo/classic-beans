@@ -1,11 +1,11 @@
 ---
 # beans-x7bd
 title: Move action buttons to server-side
-status: completed
+status: scrapped
 type: epic
 priority: normal
 created_at: 2026-03-11T19:11:38Z
-updated_at: 2026-03-11T19:39:54Z
+updated_at: 2026-11-26T10:52:05Z
 ---
 
 Move the web UI action buttons (Commit, Review) from being hardcoded in the frontend to being served by the backend via GraphQL. The backend becomes the single source of truth for available actions and their prompt templates.
@@ -29,3 +29,9 @@ Action buttons are now fully server-driven:
 - Backend: agentActions query + executeAgentAction mutation with consolidated action registry
 - Frontend: ChangesPane fetches actions dynamically, fires mutation on click
 - Removed: ActionButton.svelte, actionContext.ts, hardcoded prompts in frontend
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

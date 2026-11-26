@@ -1,11 +1,11 @@
 ---
 # beans-xf78
 title: Implement GraphQL subscriptions for live updates
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2025-12-18T16:45:17Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: zz
 parent: beans-lbjp
 ---
@@ -44,3 +44,9 @@ enum ChangeType {
 
 - Use graphql-ws protocol (modern standard)
 - Debounce rapid file changes to avoid flooding clients
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

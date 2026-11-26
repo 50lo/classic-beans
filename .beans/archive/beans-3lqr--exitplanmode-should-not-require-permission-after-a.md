@@ -1,11 +1,11 @@
 ---
 # beans-3lqr
 title: ExitPlanMode should not require permission after accepting plan
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-11T13:40:48Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzk
 ---
 
@@ -14,3 +14,9 @@ When the user accepts a plan in plan mode, the ExitPlanMode tool fires and asks 
 ## Summary of Changes
 
 ExitPlanMode is now auto-approved in the backend via `autoApproveModeSwitch`. The mode is toggled and the process is immediately respawned — no permission prompt after plan acceptance.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

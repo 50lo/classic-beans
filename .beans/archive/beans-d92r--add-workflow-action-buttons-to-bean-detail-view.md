@@ -1,11 +1,11 @@
 ---
 # beans-d92r
 title: Add workflow action buttons to bean detail view
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-12T12:32:44Z
-updated_at: 2026-03-12T12:48:05Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Add status transition buttons to BeanDetail: draft→Todo/Scrap, todo→Start Work/Scrap, in-progress→Complete/Scrap, completed/scrapped→nothing
@@ -23,3 +23,9 @@ Uses optimistic updates with rollback on error, consistent with existing pattern
 ## Summary of Changes
 
 Added workflow action buttons to BeanDetail.svelte with data-driven approach and full e2e test coverage.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

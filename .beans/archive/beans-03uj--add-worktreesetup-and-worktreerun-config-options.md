@@ -1,11 +1,11 @@
 ---
 # beans-03uj
 title: Add worktree.setup and worktree.run config options
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-13T18:59:12Z
-updated_at: 2026-03-13T19:05:21Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Add setup command (runs after worktree creation) and run command (shows Run button in workspace toolbar)
@@ -26,3 +26,9 @@ Add setup command (runs after worktree creation) and run command (shows Run butt
 ### Tests
 - Config: tests for loading/saving `setup` and `run` fields.
 - Worktree: tests verifying setup command runs after creation (and that creation works without one).
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

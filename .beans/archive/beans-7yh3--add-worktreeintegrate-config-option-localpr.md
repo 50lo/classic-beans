@@ -1,11 +1,11 @@
 ---
 # beans-7yh3
 title: Add worktree.integrate config option (local/pr)
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-17T17:32:10Z
-updated_at: 2026-03-17T17:35:42Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Add a new config option worktree.integrate that controls whether the integration workflow uses local merging or PR-based workflow. When set to 'local', PR-related buttons are hidden. When set to 'pr', the Integrate button is hidden.
@@ -23,3 +23,9 @@ Add a new config option worktree.integrate that controls whether the integration
 - Updated `WorkspaceView.svelte`: PR link hidden when mode is `local`
 - Added `IntegrateMode` to `actionContext` and populated it in `AgentActions` resolver
 - Added unit tests for `GetWorktreeIntegrate` and load/save roundtrip
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

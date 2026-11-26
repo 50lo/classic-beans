@@ -1,11 +1,11 @@
 ---
 # beans-vts8
 title: Add sidebar navigation to web UI
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T18:56:08Z
-updated_at: 2026-03-10T19:31:46Z
+updated_at: 2026-11-26T10:52:04Z
 order: s
 ---
 
@@ -31,3 +31,9 @@ Added sidebar navigation to the beans-serve web UI:
 - Created WorkspaceView.svelte with agent chat + bean detail in a resizable split pane
 - Added activeView state to UIState with localStorage persistence
 - Auto-fallback to planning view when a workspace's worktree is removed
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

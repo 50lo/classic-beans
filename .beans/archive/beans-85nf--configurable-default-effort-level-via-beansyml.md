@@ -1,11 +1,11 @@
 ---
 # beans-85nf
 title: Configurable default effort level via .beans.yml
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-17T19:14:11Z
-updated_at: 2026-03-18T06:53:58Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Add agent.default_effort config option to .beans.yml to set the project-level default thinking effort for new agent sessions
@@ -39,3 +39,9 @@ able to express a preferred default rather than being silently locked into
 - Extracted `newBaseSession()` helper in agent manager that applies both default mode and default effort to all newly created sessions (covering `AddInfoMessage`, `SetPlanMode`, `SetActMode`, `loadOrCreateSession`, and the disk-restore path in `GetSession`)
 - Wired `cfg.GetDefaultEffort()` into `serve.go` via `agentMgr.SetDefaultEffort()`
 - Fixed `AgentComposer.svelte` to remove the `|| !effort` fallback so the UI accurately reflects actual session effort
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

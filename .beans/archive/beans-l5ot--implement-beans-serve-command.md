@@ -1,11 +1,11 @@
 ---
 # beans-l5ot
 title: Implement beans serve command
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2025-12-18T16:44:42Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: zw
 parent: beans-lbjp
 ---
@@ -27,3 +27,9 @@ Create the CLI command that starts the web server.
 
 - Use context for graceful shutdown on SIGINT/SIGTERM
 - In dev mode, serve from web/build/ directory
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

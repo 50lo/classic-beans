@@ -1,11 +1,11 @@
 ---
 # beans-ou9t
 title: Move worktrees outside main repo to ~/.beans/worktrees/<project>/
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-15T17:48:28Z
-updated_at: 2026-03-15T17:54:57Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Move git worktree creation from <repo>/.beans/.worktrees/ to ~/.beans/worktrees/<project-name>/ to avoid confusion from nested repo state, accidental search hits, and tool confusion.
@@ -28,3 +28,9 @@ Move git worktree creation from <repo>/.beans/.worktrees/ to ~/.beans/worktrees/
 - Removed `.worktrees/` from generated `.gitignore` (no longer needed)
 - Updated all tests to use a separate temp directory as worktreeRoot
 - Updated CLAUDE.md to document the new architecture
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

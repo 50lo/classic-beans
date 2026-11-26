@@ -1,11 +1,11 @@
 ---
 # beans-t6hr
 title: Remove permissions system, simplify to Plan and Yolo modes
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T09:37:04Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzy
 ---
 
@@ -65,3 +65,9 @@ Completely removed the Act mode and all permission-checking infrastructure. The 
   - Tests: All test names and assertions updated
 - **Removed permission request/approval UI** (the old Act mode had permission dialogs for tool use)
 - **Simplified `buildClaudeArgs`** to two branches: `--dangerously-skip-permissions` (Act) or `--permission-mode plan` (Plan)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

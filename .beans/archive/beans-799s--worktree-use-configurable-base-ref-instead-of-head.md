@@ -1,11 +1,11 @@
 ---
 # beans-799s
 title: 'Worktree: use configurable base ref instead of HEAD'
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T19:41:47Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzs
 ---
 
@@ -23,3 +23,9 @@ Worktrees are currently created from HEAD. They should default to origin/main an
 - `beans init` now auto-detects the remote's default branch via `git symbolic-ref` and uses it as `worktree.base_ref`
 - Falls back to `origin/main` when not in a git repo or no remote is configured
 - Added `gitutil.DefaultRemoteBranch()` helper with tests
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

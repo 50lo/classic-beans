@@ -1,11 +1,11 @@
 ---
 # beans-r8mi
 title: Split PR button catch-all prompt into state-specific prompts
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-19T15:13:29Z
-updated_at: 2026-03-19T15:14:43Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 The create-pr action has a single catch-all PromptFunc that instructs the agent to check state and take the appropriate action. This often leads to the agent merging a PR even though the user only clicked 'Update PR'. Each button state (Create PR, Update PR, Fix Tests, Merge PR) should have its own focused prompt.
@@ -20,3 +20,9 @@ Replaced the single catch-all `PromptFunc` for the `create-pr` action with a sta
 - **Checks pass, mergeable**: Only instructs to merge.
 
 Added tests verifying each state returns the correct prompt and that non-merge states include the "Do NOT merge" guardrail.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

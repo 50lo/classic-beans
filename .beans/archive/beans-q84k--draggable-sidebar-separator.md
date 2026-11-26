@@ -1,11 +1,11 @@
 ---
 # beans-q84k
 title: Draggable sidebar separator
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T20:57:39Z
-updated_at: 2026-03-11T21:13:35Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Make the sidebar width resizable by dragging the border between the sidebar and main content area.
@@ -33,3 +33,9 @@ Make the sidebar width resizable by dragging the border between the sidebar and 
 - Extended SplitPane.svelte with minSize/maxSize props for configurable clamping
 - Wrapped the sidebar in a SplitPane (side=start, 150-400px range, persisted as beans-split-sidebar)
 - Removed fixed w-56 width from Sidebar.svelte so it fills the SplitPane aside pane
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

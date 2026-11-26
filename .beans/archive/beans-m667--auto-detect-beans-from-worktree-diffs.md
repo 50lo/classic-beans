@@ -1,11 +1,11 @@
 ---
 # beans-m667
 title: Auto-detect beans from worktree diffs
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-13T14:53:07Z
-updated_at: 2026-03-13T15:07:09Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Expose beans field on Worktree GraphQL type by analyzing git diff vs base branch for .beans/*.md changes
@@ -30,3 +30,9 @@ Expose beans field on Worktree GraphQL type by analyzing git diff vs base branch
 - Sidebar renders detected beans nested under each worktree, clicking navigates to planning view with bean selected
 - Added `selectBeanById()` method to UIState
 - Added 3 tests: committed changes, no changes, and untracked changes
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

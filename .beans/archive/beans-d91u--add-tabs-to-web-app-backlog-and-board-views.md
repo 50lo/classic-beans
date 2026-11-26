@@ -1,11 +1,11 @@
 ---
 # beans-d91u
 title: 'Add tabs to web app: Backlog and Board views'
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-07T22:21:38Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: Vk
 ---
 
@@ -21,3 +21,9 @@ Added tab navigation to the web app's main view with two tabs:
 - **Board** - A kanban board view with columns for Draft, Todo, and In Progress statuses. Clicking a card opens a detail pane on the right side.
 
 The active tab is persisted to localStorage. Both views share the same bean selection/detail mechanism.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

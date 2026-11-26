@@ -1,11 +1,11 @@
 ---
 # beans-amlk
 title: 'Build web UI: Bean detail view'
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2025-12-18T16:45:35Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: zV
 parent: beans-lbjp
 ---
@@ -27,3 +27,9 @@ Implement the bean detail/edit interface.
 
 - Could be a slide-over panel or separate route
 - Markdown editor with preview for body editing
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

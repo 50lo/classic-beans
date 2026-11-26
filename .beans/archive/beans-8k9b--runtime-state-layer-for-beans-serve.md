@@ -1,11 +1,11 @@
 ---
 # beans-8k9b
 title: Runtime state layer for beans-serve
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T14:58:36Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:03Z
 order: F
 ---
 
@@ -19,3 +19,9 @@ Decouple beans-serve runtime state from disk persistence. Add dirty tracking, op
 - [x] Step 4: Watch worktree bean directories
 - [x] Step 5: Expose isDirty in GraphQL Bean type
 - [x] Step 6: Clean up on worktree removal
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

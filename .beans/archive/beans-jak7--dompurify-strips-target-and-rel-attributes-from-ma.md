@@ -1,11 +1,11 @@
 ---
 # beans-jak7
 title: DOMPurify strips target and rel attributes from markdown links
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-11T18:06:44Z
-updated_at: 2026-03-11T18:06:49Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 DOMPurify sanitization was stripping `target="_blank"` and `rel="noopener noreferrer"` from rendered markdown links because these attributes were not in the `ADD_ATTR` allowlist.
@@ -27,3 +27,9 @@ Added `target` and `rel` to the DOMPurify `ADD_ATTR` allowlist.
 
 - **`frontend/src/lib/markdown.ts`**: Added `target` and `rel` to DOMPurify `ADD_ATTR` allowlist so external links correctly open in new tabs.
 - **`frontend/e2e/markdown-links.spec.ts`**: New e2e test that creates a bean with markdown and autolinked URLs, then verifies both have `target="_blank"` and `rel="noopener noreferrer"`.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

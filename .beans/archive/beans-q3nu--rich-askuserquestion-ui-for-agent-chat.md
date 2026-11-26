@@ -1,11 +1,11 @@
 ---
 # beans-q3nu
 title: Rich AskUserQuestion UI for agent chat
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T12:40:34Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzV
 ---
 
@@ -32,3 +32,9 @@ Implemented rich AskUserQuestion UI for the agent chat:
 - **Backend**: Added deferred blocking for AskUserQuestion in the stream reader so tool input JSON is fully accumulated before triggering the blocking interaction. Added `AskUserQuestion` and `AskUserOption` types, `parseAskUserInput()` parser with tests.
 - **GraphQL**: Extended `PendingInteraction` with `questions` field containing structured question/option data.
 - **Frontend**: Replaced the generic "type your reply below" banner with an interactive UI showing question headers, question text, and clickable option buttons. Single-select sends immediately; multi-select allows toggling options with a submit button. Falls back to the generic message if no structured data is available.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

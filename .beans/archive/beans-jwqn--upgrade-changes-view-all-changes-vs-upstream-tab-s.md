@@ -1,11 +1,11 @@
 ---
 # beans-jwqn
 title: 'Upgrade changes view: all changes vs upstream + tab switcher'
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-12T14:41:06Z
-updated_at: 2026-03-12T14:46:38Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Show all changes compared to the upstream branch (committed + staged + unstaged) and add a tab switcher between 'Unstaged Changes' and 'All Changes'.
@@ -25,3 +25,9 @@ Show all changes compared to the upstream branch (committed + staged + unstaged)
 - Unstaged tab shows the previous staged/unstaged view (disabled when no working tree changes)
 - Renamed pane title from "Status" to "Changes" across all views
 - Clicking a file in All Changes mode fetches diff vs merge-base; in Unstaged mode uses the existing staged/unstaged diff
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

@@ -1,11 +1,11 @@
 ---
 # beans-mjg6
 title: Batch GitHub PR queries into single GraphQL call
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-18T06:08:08Z
-updated_at: 2026-03-18T06:12:21Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Replace per-worktree gh CLI invocations in populatePRsAsync with a single gh api graphql call that fetches PR data for all branches at once, reducing GitHub API usage.
@@ -18,3 +18,9 @@ Replace per-worktree gh CLI invocations in populatePRsAsync with a single gh api
 - Added `populatePRsBatch` in the resolver layer, replacing parallel per-worktree `populatePR` goroutines
 - Updated both the `Worktrees` query resolver and the `WorktreesChanged` subscription to use batch fetching
 - Added tests for `ParseOwnerRepo`, `graphQLCheckToStatusCheck`, and `graphQLPRToForge`
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

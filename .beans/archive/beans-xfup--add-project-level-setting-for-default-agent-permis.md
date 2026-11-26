@@ -1,11 +1,11 @@
 ---
 # beans-xfup
 title: Add project-level setting for default agent permission mode
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T12:21:17Z
-updated_at: 2026-03-10T19:31:46Z
+updated_at: 2026-11-26T10:52:04Z
 order: c
 ---
 
@@ -21,3 +21,9 @@ Allow configuring the default permission mode (yolo/act/plan) for new agent sess
 - [ ] Update tests (config + agent manager)
 - [ ] Run `mise codegen` if GraphQL changes needed (none expected)
 - [ ] Run tests
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

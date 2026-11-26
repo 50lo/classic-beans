@@ -1,11 +1,11 @@
 ---
 # beans-id9s
 title: Better tool display formatting for agent chat
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-10T15:15:44Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzzs
 ---
 
@@ -18,3 +18,9 @@ No e2e tests added — formatToolInput is only used for permission request displ
 ## Summary of Changes
 
 Added proper formatting for ToolSearch, WebSearch, WebFetch, Agent, Skill, EnterWorktree, and ExitWorktree in `formatToolInput()`. Replaced raw JSON default with smart field extraction matching backend priority list.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

@@ -1,11 +1,11 @@
 ---
 # beans-4zsu
 title: Add comments to generated .beans.yml config file
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2025-12-20T14:40:52Z
-updated_at: 2026-03-10T16:07:03Z
+updated_at: 2026-11-26T10:52:04Z
 order: Vc
 parent: beans-f11p
 ---
@@ -53,3 +53,9 @@ server:
 - Added `toYAMLNode()` method on `Config` that builds a `yaml.Node` document tree with helpful comments on each field
 - Updated `Save()` to encode via the node tree instead of `yaml.Marshal`
 - Added `TestSaveIncludesComments` and `TestSaveOmitsEmptyServerSection` tests
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

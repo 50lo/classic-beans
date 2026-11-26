@@ -1,11 +1,11 @@
 ---
 # beans-a37d
 title: Sort workspaces by last agent activity
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-14T15:05:50Z
-updated_at: 2026-03-14T15:09:29Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Sort workspaces in the sidebar by when their agent last completed a turn, so most recently active workspaces appear at the top. Uses a LastActiveAt timestamp persisted in worktree metadata.
@@ -21,3 +21,9 @@ Sort workspaces in the sidebar by when their agent last completed a turn, so mos
 - Wired callback in `serve.go` to call `TouchLastActive` when a workspace agent finishes a turn
 - No frontend changes needed — sidebar renders in the order the backend provides
 - Added 3 new tests: `TestTouchLastActive`, `TestListSortsByLastActiveAt`, `TestCreateSetsLastActiveAt`
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

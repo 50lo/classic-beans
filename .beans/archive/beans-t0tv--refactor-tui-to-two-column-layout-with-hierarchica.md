@@ -1,11 +1,11 @@
 ---
 # beans-t0tv
 title: Refactor TUI to two-column layout with hierarchical navigation
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2025-12-14T15:37:22Z
-updated_at: 2026-03-10T08:08:34Z
+updated_at: 2026-11-26T10:52:03Z
 order: V0F
 parent: beans-f11p
 ---
@@ -153,3 +153,9 @@ Applied everywhere (not just two-column mode) for consistency.
 - Configurable pane widths
 - Keyboard focus on right pane
 - Breadcrumb navigation
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

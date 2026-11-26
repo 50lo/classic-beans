@@ -1,11 +1,11 @@
 ---
 # beans-buwe
 title: Activate bean filter input on Cmd-/ or Ctrl-/
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T15:02:46Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzz
 ---
 
@@ -14,3 +14,9 @@ When the user presses Cmd-/ (macOS) or Ctrl-/ (other platforms) in the web UI, f
 ## Summary of Changes
 
 Added Cmd+/ (macOS) and Ctrl+/ (other platforms) as keyboard shortcuts to focus the bean filter input in `+page.svelte`. This was a one-line change extending the existing Cmd/Ctrl+F handler to also match the `/` key.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

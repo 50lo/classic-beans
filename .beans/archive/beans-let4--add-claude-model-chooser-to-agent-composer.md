@@ -1,11 +1,11 @@
 ---
 # beans-let4
 title: Add Claude model chooser to agent composer
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-16T16:48:23Z
-updated_at: 2026-03-16T16:57:49Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 Add a model selector dropdown to the AgentComposer that lets users pick which Claude model to use (sonnet, opus, haiku). The selection flows through GraphQL to the backend, which passes --model to the spawned claude CLI process.
@@ -32,3 +32,9 @@ Add a model selector dropdown to the AgentComposer that lets users pick which Cl
 ### Tests
 - Added `TestBuildClaudeArgs_Model`, `TestBuildClaudeArgs_NoModel`
 - Added `TestSetModel_CreatesSession`, `TestSetModel_UpdatesExisting`, `TestSetModel_NoopWhenSame`
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

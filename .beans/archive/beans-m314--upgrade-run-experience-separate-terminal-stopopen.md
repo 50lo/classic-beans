@@ -1,11 +1,11 @@
 ---
 # beans-m314
 title: 'Upgrade Run experience: separate terminal, Stop/Open buttons'
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-17T19:36:50Z
-updated_at: 2026-03-18T09:37:04Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 - [x] Run command should use a separate terminal session from the main shell
@@ -37,3 +37,9 @@ Upgraded the Run experience in workspace toolbars:
 **Tests:**
 - 4 unit tests for `CreateWithCommand` (output, exit behavior, session replacement, env injection)
 - 5 e2e tests covering Run/Stop/Open button visibility, state transitions, and port display
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

@@ -1,11 +1,11 @@
 ---
 # beans-2j8h
 title: Add agent.enabled config setting to hide agent UI
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T22:11:22Z
-updated_at: 2026-03-11T22:15:17Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 Add agent.enabled config setting (default true). When disabled, hide agent chats, status panes, and worktree functionality in the web UI. beans init should set it to true by default.
@@ -26,3 +26,9 @@ Add agent.enabled config setting (default true). When disabled, hide agent chats
 - **WorkspaceView**: Imports config store (workspace route is already unreachable when disabled)
 - **BeanDetail**: Hides "Start Work" button when agents are disabled
 - **Layout**: Redirects to planning view when agents are disabled and on a workspace route
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

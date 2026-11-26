@@ -1,11 +1,11 @@
 ---
 # beans-vbap
 title: Image attachments in agent conversation
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T17:38:55Z
-updated_at: 2026-03-11T21:51:10Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzk
 ---
 
@@ -39,3 +39,9 @@ Allow users to attach images in the agent chat conversation. Images should be se
 - **Frontend composer** (`AgentComposer.svelte`): Paste, drag-and-drop, and file picker for image attachment; thumbnail previews with remove buttons
 - **Frontend messages** (`AgentMessages.svelte`): Inline image display in user messages
 - **Tests**: 7 new Go unit tests for image storage, validation, round-trip, clear, prune, and path traversal; 1 new Playwright e2e test for inline image display
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

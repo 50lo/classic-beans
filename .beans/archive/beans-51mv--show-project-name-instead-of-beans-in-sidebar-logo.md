@@ -1,11 +1,11 @@
 ---
 # beans-51mv
 title: Show project name instead of 'beans' in sidebar logo
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-12T11:29:40Z
-updated_at: 2026-03-12T12:00:31Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 The upper-left corner of the sidebar currently shows the hardcoded text 'beans'. It should instead show the name of the project being tracked. This likely involves:
@@ -37,3 +37,9 @@ Location: `frontend/src/lib/components/Sidebar.svelte:45`
 - Updated frontend `ConfigStore` to fetch `projectName` alongside `agentEnabled`
 - Updated `Sidebar.svelte` to display project name (falls back to "beans")
 - Added unit tests for load, save, and omit-when-empty behavior
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

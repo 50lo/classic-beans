@@ -1,11 +1,11 @@
 ---
 # beans-94u1
 title: Batch initial bean subscription into single snapshot event
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-12T11:32:18Z
-updated_at: 2026-03-12T11:38:52Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 The BeanChanged subscription sends each bean as an individual INITIAL event during initial sync, causing performance issues with large bean counts. Replace with a single INITIAL_SNAPSHOT event carrying all beans at once.
@@ -25,3 +25,9 @@ Replaced per-bean INITIAL + INITIAL_SYNC_COMPLETE subscription events with a sin
 
 ### Tests
 - Updated `TestSubscriptionBeanChanged` to verify single snapshot event
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

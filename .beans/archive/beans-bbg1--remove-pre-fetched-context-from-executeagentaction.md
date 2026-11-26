@@ -1,11 +1,11 @@
 ---
 # beans-bbg1
 title: Remove pre-fetched context from ExecuteAgentAction, let agents gather their own context
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-18T09:59:28Z
-updated_at: 2026-03-18T10:01:19Z
+updated_at: 2026-11-26T10:52:08Z
 ---
 
 ## Summary of Changes
@@ -17,3 +17,9 @@ Simplified prompts:
 - **create-pr**: Single unified prompt that tells the agent to check PR state and take the appropriate action, instead of pre-branching into 4 different prompts based on pre-fetched state
 - **integrate**: Unchanged (only used `MainRepoPath`, which is a path lookup, not I/O)
 - **review/learn/tests**: Already didn't use context, unchanged
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

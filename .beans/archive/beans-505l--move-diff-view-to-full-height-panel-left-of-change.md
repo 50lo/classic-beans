@@ -1,11 +1,11 @@
 ---
 # beans-505l
 title: Move diff view to full-height panel left of Changes pane
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-18T14:08:32Z
-updated_at: 2026-03-18T14:11:27Z
+updated_at: 2026-11-26T10:52:08Z
 ---
 
 Extract the diff view from inside ChangesPane (where it's in a vertical split below the file list) into its own full-height panel positioned to the left of ChangesPane in WorkspaceView's horizontal SplitPane.
@@ -19,3 +19,9 @@ Extracted the diff view from inside ChangesPane into a full-height panel (DiffPa
 - **frontend/src/lib/components/DiffPane.svelte** (new) — Full-height diff viewer component that reads from the shared store.
 - **frontend/src/lib/components/ChangesPane.svelte** — Removed inline diff view, SplitPane, and diff state. Now delegates to diffSelectionStore for file selection.
 - **frontend/src/lib/components/WorkspaceView.svelte** — Added DiffPane as a new collapsible panel (600px default) between AgentChat and ChangesPane. Clears diff selection when Changes pane is closed.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

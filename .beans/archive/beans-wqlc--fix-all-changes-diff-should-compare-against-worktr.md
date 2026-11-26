@@ -1,11 +1,11 @@
 ---
 # beans-wqlc
 title: 'Fix: All Changes diff should compare against worktree base branch, not remote upstream'
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-12T14:59:25Z
-updated_at: 2026-03-12T15:02:43Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 The All Changes tab in the changes pane for worktree spaces compares against origin/main (the remote default branch) instead of the configured worktree base branch. MergeBase() uses DefaultRemoteBranch() which resolves to origin/main, but it should use the base_ref from .beans.yml config (defaulting to 'main').
@@ -18,3 +18,9 @@ The All Changes tab in the changes pane for worktree spaces compares against ori
 - Also fixed `HasUnmergedCommits` call in agent action resolver to use configured base ref
 - Added `BaseRef()` getter to `worktree.Manager`
 - Added test for fallback behavior when baseRef is empty
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

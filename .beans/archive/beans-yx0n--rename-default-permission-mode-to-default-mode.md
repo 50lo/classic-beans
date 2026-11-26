@@ -1,11 +1,11 @@
 ---
 # beans-yx0n
 title: Rename default_permission_mode to default_mode
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-11T12:24:53Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzy
 ---
 
@@ -30,3 +30,9 @@ Renamed `default_permission_mode` to `default_mode` across the codebase:
 - `internal/agent/manager.go`: type `DefaultPermissionMode` → `DefaultMode`, struct field, constructor param
 - `internal/commands/serve.go`: call site updated
 - `.beans.yml`: config key updated
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

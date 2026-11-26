@@ -1,11 +1,11 @@
 ---
 # beans-26u4
 title: Extract AgentActionsStore and move action buttons to toolbar
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-12T18:58:24Z
-updated_at: 2026-03-12T19:02:18Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Extract agent action fetch/execute logic from ChangesPane into a shared AgentActionsStore class (agentActions.svelte.ts). Move action buttons into ViewToolbar via a new 'right' snippet slot. Reorder toolbar buttons (Agent, Changes, Terminal) and move planning agent chat panel to left side of layout.
@@ -24,3 +24,9 @@ Extract agent action fetch/execute logic from ChangesPane into a shared AgentAct
 - Moved idle-transition tracking (wasAgentBusy pattern) into AgentActionsStore.notifyAgentStatus()
 - Added agentBusy guard to AgentActionsStore.execute() for defense-in-depth
 - Cleaned up extra blank lines in ChangesPane.svelte
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

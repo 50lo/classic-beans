@@ -1,11 +1,11 @@
 ---
 # beans-fdej
 title: 'Simplify worktree setup: decouple worktrees from beans'
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T22:30:12Z
-updated_at: 2026-03-11T22:41:54Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Worktrees are no longer bound to specific beans. The primary action is to create a worktree. 'Start work' on a bean creates a worktree and seeds the agent conversation with a prompt like 'start working on bean-xxxx'.
@@ -35,3 +35,9 @@ Worktrees are no longer bound to specific beans. The primary action is to create
 - WorkspaceView no longer takes a `bean` prop or shows a bean detail pane
 - Sidebar workspace items use worktree name/branch instead of looking up bean titles
 - Updated all Go and frontend tests
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

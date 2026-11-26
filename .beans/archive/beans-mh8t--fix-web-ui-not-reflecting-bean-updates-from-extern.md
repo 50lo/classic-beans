@@ -1,11 +1,11 @@
 ---
 # beans-mh8t
 title: 'Fix: Web UI not reflecting bean updates from external processes'
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-10T11:34:53Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzw
 ---
 
@@ -26,3 +26,9 @@ Changed the `out` channel in `BeanChanged` from unbuffered to buffered (64), red
 - `TestHandleChanges_RemoveAndWriteInSameBatch` — regression test for the continue bug
 - `TestHandleChanges_RemoveOnly` — ensures Remove-only still deletes correctly
 - `TestFanOut_DropsEventsForSlowSubscriber` — verifies buffer behavior
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

@@ -1,11 +1,11 @@
 ---
 # beans-v3b9
 title: Display diff in agent chat when Write tool is used
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T22:33:29Z
-updated_at: 2026-03-12T07:33:29Z
+updated_at: 2026-11-26T10:52:04Z
 order: zzV
 ---
 
@@ -28,3 +28,9 @@ When the agent uses the Write tool in the beans-serve UI, display a collapsible 
 ### Tests
 - `diff_test.go`: tests for identical content, new files, and modified content
 - `parse_test.go`: tests for `extractFilePath` and `extractFileContent`
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

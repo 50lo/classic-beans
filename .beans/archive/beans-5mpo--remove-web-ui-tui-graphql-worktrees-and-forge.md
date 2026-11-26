@@ -1,11 +1,11 @@
 ---
 # beans-5mpo
 title: Remove Web-UI, TUI, GraphQL, worktrees, and forge
-status: completed
+status: scrapped
 type: task
 priority: critical
 created_at: 2026-04-22T22:09:11Z
-updated_at: 2026-04-22T22:23:08Z
+updated_at: 2026-11-26T10:52:05Z
 ---
 
 Simplify beans to CLI-only issue tracker. Remove Web-UI, TUI, GraphQL, worktree management, and forge integration.
@@ -32,3 +32,9 @@ Removed Web UI (SvelteKit frontend), TUI (Bubble Tea), GraphQL API, worktree man
 **Added to beancore:** Filter struct and FilteredBeans() method to replace GraphQL filtering.
 
 **Updated:** mise.toml (single binary build), .goreleaser.yaml (single binary release), prompt.tmpl (no GraphQL), all AGENTS.md files.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

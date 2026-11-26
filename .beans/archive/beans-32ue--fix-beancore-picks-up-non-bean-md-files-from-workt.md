@@ -1,11 +1,11 @@
 ---
 # beans-32ue
 title: 'Fix: beancore picks up non-bean .md files from worktrees/ and conversations/'
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-10T17:22:54Z
-updated_at: 2026-03-10T19:31:46Z
+updated_at: 2026-11-26T10:52:03Z
 order: V
 ---
 
@@ -18,3 +18,9 @@ loadFromDisk() and Watch() recursively walk the entire .beans/ directory, pickin
 - Added `migrateLegacyDirs()` to auto-rename old directories on load
 - Updated `.gitignore` template, worktree path, agent store path, e2e tests, and CLAUDE.md rules
 - Added `TestLoadSkipsDotPrefixedSubdirectories` test
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

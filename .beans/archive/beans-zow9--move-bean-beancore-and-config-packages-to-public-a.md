@@ -1,11 +1,11 @@
 ---
 # beans-zow9
 title: Move bean, beancore, and config packages to public API
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-10T19:11:48Z
-updated_at: 2026-03-10T19:31:46Z
+updated_at: 2026-11-26T10:52:04Z
 order: "y"
 ---
 
@@ -20,3 +20,9 @@ Moved `bean`, `beancore`, and `config` packages from `internal/` to top-level, m
 - `github.com/hmans/beans/config` — project configuration
 
 Updated all import paths across the codebase, gqlgen config (`gqlgen.yml`), and regenerated GraphQL code. `internal/search` stays internal as it's only consumed privately by `beancore`.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

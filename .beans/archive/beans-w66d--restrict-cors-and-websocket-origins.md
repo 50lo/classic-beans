@@ -1,11 +1,11 @@
 ---
 # beans-w66d
 title: Restrict CORS and WebSocket origins
-status: completed
+status: scrapped
 type: task
 priority: high
 created_at: 2026-03-09T17:01:38Z
-updated_at: 2026-03-11T16:08:33Z
+updated_at: 2026-11-26T10:52:04Z
 order: zz
 parent: beans-oe8n
 ---
@@ -20,3 +20,9 @@ The server currently sets Access-Control-Allow-Origin: * (serve.go line 65) and 
 - Added `--cors-origin` CLI flag and `server.cors_origins` config option
 - Narrowed `Access-Control-Allow-Headers` to `Content-Type` only
 - Added `Vary: Origin` header for correct caching behavior
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

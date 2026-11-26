@@ -1,11 +1,11 @@
 ---
 # beans-6piw
 title: Validate localStorage values in frontend
-status: completed
+status: scrapped
 type: task
 priority: low
 created_at: 2026-03-09T17:02:04Z
-updated_at: 2026-03-10T21:20:32Z
+updated_at: 2026-11-26T10:52:03Z
 order: V
 parent: beans-oe8n
 ---
@@ -17,3 +17,9 @@ Several frontend components read localStorage without validating the stored valu
 - SplitPane.svelte: Added Number.isNaN() guard on parseInt result when loading persisted split size from localStorage. Falls back to initialSize default instead of producing NaN.
 - +layout.ts: Changed nullish coalescing (??) to logical OR (||) for activeView localStorage read, so empty strings also fall back to 'planning'.
 - planningView and showPlanningChat reads were already safe (explicit value checks). filterText is free-form and needs no validation.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

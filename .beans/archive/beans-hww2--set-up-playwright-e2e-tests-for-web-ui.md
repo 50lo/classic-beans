@@ -1,11 +1,11 @@
 ---
 # beans-hww2
 title: Set up Playwright e2e tests for web UI
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-08T11:37:25Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: zzk
 ---
 
@@ -22,3 +22,9 @@ Add Playwright e2e tests with page objects to verify the web UI works correctly,
 - Added data-status attribute to BoardView columns for reliable test selectors
 - Added mise test:e2e task and pnpm test:e2e script
 - Also fixed frontend sorting: added sortBeans() to beans.svelte.ts matching backend sort logic
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

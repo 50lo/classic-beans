@@ -1,11 +1,11 @@
 ---
 # beans-ct2v
 title: Rename Changes pane to Status and add workflow action buttons
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T21:56:53Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzz
 ---
 
@@ -34,3 +34,9 @@ order: zzzz
 - Lifted AgentChatStore into parent views to avoid duplicate subscriptions
 - AgentChat accepts optional external store prop
 - Added build warnings rule to frontend.md
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

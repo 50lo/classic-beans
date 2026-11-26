@@ -1,11 +1,11 @@
 ---
 # beans-w7op
 title: Async worktree setup with status tracking
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-13T19:32:13Z
-updated_at: 2026-03-13T19:39:06Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Run worktree setup command asynchronously instead of blocking creation. Track setup status and notify the user via agent chat when setup completes or fails.
@@ -31,3 +31,9 @@ Run worktree setup command asynchronously instead of blocking creation. Track se
 
 ### Tests
 - Updated `TestCreateRunsSetupCommand` to handle async setup via callback and verify setup status tracking
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

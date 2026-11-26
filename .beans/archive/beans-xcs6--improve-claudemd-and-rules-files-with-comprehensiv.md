@@ -1,11 +1,11 @@
 ---
 # beans-xcs6
 title: Improve CLAUDE.md and rules files with comprehensive project documentation
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-13T20:27:46Z
-updated_at: 2026-03-13T20:27:55Z
+updated_at: 2026-11-26T10:52:08Z
 ---
 
 Flesh out CLAUDE.md with a proper project description and architecture overview. Add path-scoped rules files for backend Go conventions. Expand frontend.md with state management, theme system, and markdown rendering docs. Fix frontmatter to use 'paths' (correct Claude Code syntax) instead of 'globs' (Cursor syntax).
@@ -19,3 +19,9 @@ Flesh out CLAUDE.md with a proper project description and architecture overview.
 - **tools.md**: Expanded from 2 to full mise command inventory
 - **claude-cli.md**: Added path scoping
 - **All rules files**: Fixed frontmatter from `globs:` (Cursor syntax) to `paths:` (correct Claude Code syntax)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

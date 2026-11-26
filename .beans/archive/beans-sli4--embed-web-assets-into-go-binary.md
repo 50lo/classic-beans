@@ -1,11 +1,11 @@
 ---
 # beans-sli4
 title: Embed web assets into Go binary
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2025-12-18T16:44:50Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: zs
 parent: beans-lbjp
 ---
@@ -24,3 +24,9 @@ Set up go:embed to include the built SvelteKit assets in the binary.
 
 - SPA routing is important: all routes should fall back to index.html
 - Consider gzip/brotli pre-compression for production builds
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

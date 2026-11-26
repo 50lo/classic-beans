@@ -1,11 +1,11 @@
 ---
 # beans-v77a
 title: Add Clear button to agent conversations
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T08:15:02Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzV
 ---
 
@@ -31,3 +31,9 @@ Add a Clear button next to the plan/act/yolo mode switcher in agent conversation
 
 ### E2E Test
 - Added `agent-chat.spec.ts` that seeds a JSONL conversation file, opens the chat, clicks Clear, and verifies the UI resets (no Claude process spawned)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

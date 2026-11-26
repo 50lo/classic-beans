@@ -1,11 +1,11 @@
 ---
 # beans-418q
 title: Decrypt/descramble text animation effect
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-14T17:40:55Z
-updated_at: 2026-03-14T18:27:49Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Add a typewriter-style text animation where the last few characters 'descramble' from random glyphs into the real text. Apply to workspace descriptions, agent activity labels, and similar short text elements.
@@ -16,3 +16,9 @@ Add a typewriter-style text animation where the last few characters 'descramble'
 - Applied the effect to: agent activity labels, tool invocation titles, info messages, subagent activity lines, workspace descriptions, and bean mini cards in the sidebar
 - Added `immediate` option so historical/existing content renders instantly on mount, and only fresh/new content gets animated
 - Fixed animation timing drift by preserving fractional remainder across frames
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

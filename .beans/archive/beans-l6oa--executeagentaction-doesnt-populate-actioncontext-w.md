@@ -1,11 +1,11 @@
 ---
 # beans-l6oa
 title: ExecuteAgentAction doesn't populate actionContext with PR/git state
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-19T17:43:46Z
-updated_at: 2026-03-19T17:45:08Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 The ExecuteAgentAction mutation resolver only sets WorktreeID, WorkDir, MainRepoPath, and ForgeCLI on the actionContext. It never populates PullRequest, HasChanges, HasNewCommits, HasUnpushedCommits, etc. This means prPrompt() always sees ctx.PullRequest == nil and returns the 'Create a pull request' prompt regardless of actual state.
@@ -17,3 +17,9 @@ Fixed the `ExecuteAgentAction` mutation resolver to populate the full `actionCon
 Changes in `internal/graph/schema.resolvers.go`:
 - Added `gitutil.HasChanges()`, `gitutil.HasUnmergedCommits()`, `gitutil.HasUnpushedCommits()` calls
 - Added `gitutil.CurrentBranch()` + `Forge.FindPR()` to populate PR state
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

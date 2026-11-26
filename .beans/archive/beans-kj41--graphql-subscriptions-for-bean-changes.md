@@ -1,11 +1,11 @@
 ---
 # beans-kj41
 title: GraphQL subscriptions for bean changes
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2025-12-20T09:50:21Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: Vz
 ---
 
@@ -24,3 +24,9 @@ Add real-time GraphQL subscriptions for bean change events.
 - internal/graph/model/models_gen.go (generated)
 - internal/graph/generated.go (generated)
 - cmd/serve.go
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

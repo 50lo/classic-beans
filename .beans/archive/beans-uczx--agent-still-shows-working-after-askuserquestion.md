@@ -1,11 +1,11 @@
 ---
 # beans-uczx
 title: Agent still shows 'working' after AskUserQuestion
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-13T20:20:01Z
-updated_at: 2026-03-13T20:21:57Z
+updated_at: 2026-11-26T10:52:05Z
 ---
 
 When the agent invokes AskUserQuestion, readOutput continues processing events after handleBlockingTool sets status to IDLE. The ensureRunning() helper then flips status back to RUNNING, causing the frontend to show 'Agent is working...' alongside the pending interaction UI.
@@ -19,3 +19,9 @@ After `handleBlockingTool` sets session status to IDLE and signals the process, 
 
 - `internal/agent/claude.go`: Added `blocked` flag, set it after all `handleBlockingTool` calls within the scanner loop, check it in `ensureRunning()`
 - `internal/agent/claude_test.go`: Added `TestReadOutputAskUserQuestionStaysIdle` test
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

@@ -1,11 +1,11 @@
 ---
 # beans-58sx
 title: Dark theme with automatic system preference detection
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-09T14:06:45Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: Vw
 ---
 
@@ -20,3 +20,9 @@ Implemented automatic dark/light theme switching based on `prefers-color-scheme`
 - **BeanDetail.svelte**: Added `dark:` variants to type badge and border colors. Replaced hardcoded hex colors in `<style>` block (markdown headings, inline code bg) with CSS custom properties.
 - **BoardView.svelte**: Added `dark:` variants to type badge and border colors.
 - **BeanItem.svelte**: Added `dark:` variants to type border colors.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

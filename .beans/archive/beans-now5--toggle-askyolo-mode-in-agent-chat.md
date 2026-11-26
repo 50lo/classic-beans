@@ -1,11 +1,11 @@
 ---
 # beans-now5
 title: Toggle Ask/Yolo mode in agent chat
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-09T18:04:46Z
-updated_at: 2026-03-10T08:12:46Z
+updated_at: 2026-11-26T10:52:03Z
 order: V0N
 ---
 
@@ -19,3 +19,9 @@ Added YOLO mode toggle to agent chat, mirroring the existing Plan mode pattern:
 - **GraphQL**: Added `yoloMode` field to `AgentSession` type and `setAgentYoloMode` mutation
 - **Frontend**: Added `yoloMode` to store subscription/interface, `setYoloMode` mutation method, Ask/YOLO toggle buttons (red danger styling for YOLO)
 - **Tests**: 6 new tests covering SetYoloMode lifecycle and buildClaudeArgs with YOLO flag
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

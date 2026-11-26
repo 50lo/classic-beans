@@ -1,11 +1,11 @@
 ---
 # beans-xijy
 title: Refactor AgentChat into sub-components and extract shared RenderedMarkdown
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-11T18:55:27Z
-updated_at: 2026-03-11T18:58:23Z
+updated_at: 2026-11-26T10:52:08Z
 ---
 
 Split AgentChat.svelte (493 lines) into focused sub-components and extract a shared RenderedMarkdown component used by both AgentChat and BeanDetail.
@@ -29,3 +29,9 @@ Split AgentChat.svelte (493 lines) into 4 focused components:
 - **AgentComposer.svelte** — textarea input with localStorage persistence, send/stop buttons, plan/act mode toggle, compact/clear actions
 - **AgentChat.svelte** — now a thin orchestrator (~80 lines) composing the three sub-components
 - **BeanDetail.svelte** — replaced inline markdown rendering + bean-link handler with RenderedMarkdown component, removing ~20 lines of duplicated code
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

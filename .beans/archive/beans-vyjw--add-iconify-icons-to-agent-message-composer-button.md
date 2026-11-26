@@ -1,11 +1,11 @@
 ---
 # beans-vyjw
 title: Add Iconify icons to agent message composer buttons
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T17:44:33Z
-updated_at: 2026-03-10T19:31:46Z
+updated_at: 2026-11-26T10:52:04Z
 order: k
 ---
 
@@ -30,3 +30,9 @@ Added UIL icons (via Iconify) to all agent message composer buttons:
 - Clear: uil--trash-alt
 
 Also added flex alignment (inline-flex, items-center, gap) to Send/Stop buttons and the .btn-tab-sm class.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

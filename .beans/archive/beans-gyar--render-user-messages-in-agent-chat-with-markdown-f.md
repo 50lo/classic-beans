@@ -1,11 +1,11 @@
 ---
 # beans-gyar
 title: Render user messages in agent chat with markdown formatting
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-14T18:28:25Z
-updated_at: 2026-03-14T18:29:03Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 User messages in the agent chat are rendered as plain text (whitespace-pre-wrap) while assistant messages get full markdown rendering via renderMarkdown(). User messages should also be markdown-formatted for consistency.
@@ -17,3 +17,9 @@ Modified `AgentMessages.svelte` to render user messages with markdown formatting
 - Extended the markdown rendering `$effect` to process both `USER` and `ASSISTANT` messages
 - Updated `getRenderedContent()` to return rendered HTML for user messages
 - Updated the user message template to use `{@html}` with `agent-prose prose` classes when rendered content is available, falling back to plain text while rendering
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

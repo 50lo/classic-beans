@@ -1,11 +1,11 @@
 ---
 # beans-2cak
 title: Agent chat in worktree tabs
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-08T15:58:35Z
-updated_at: 2026-03-09T14:51:35Z
+updated_at: 2026-11-26T10:52:03Z
 order: V1u
 ---
 
@@ -32,3 +32,9 @@ Implement agent chat within worktree tabs in the web UI. Spawn and manage Claude
 - [x] Persist session ID for --resume
 - [x] Load conversations from disk on server restart
 - [x] Add store tests (`store_test.go`)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

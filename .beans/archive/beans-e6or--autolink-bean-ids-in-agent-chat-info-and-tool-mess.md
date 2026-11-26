@@ -1,11 +1,11 @@
 ---
 # beans-e6or
 title: Autolink bean IDs in agent chat INFO and TOOL messages
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-15T17:41:18Z
-updated_at: 2026-03-15T17:41:24Z
+updated_at: 2026-11-26T10:52:05Z
 ---
 
 Bean mentions in agent chat TOOL and INFO messages are not autolinked. Only ASSISTANT and USER messages go through renderMarkdown() which has the beanLinkExtension. TOOL and INFO messages use the decryptText action (plain textContent), so bean IDs appear as unlinked text.
@@ -17,3 +17,9 @@ Bean mentions in agent chat TOOL and INFO messages are not autolinked. Only ASSI
 - Updated `AgentMessages.svelte` to pass linkified HTML for INFO and TOOL messages
 - Added e2e test verifying bean ID autolinking across all message types
 - Extended `AgentSessionBuilder` to support `tool` and `info` message roles
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

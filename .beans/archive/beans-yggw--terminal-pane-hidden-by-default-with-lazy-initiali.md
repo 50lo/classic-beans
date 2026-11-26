@@ -1,11 +1,11 @@
 ---
 # beans-yggw
 title: Terminal pane hidden by default with lazy initialization
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-12T11:00:38Z
-updated_at: 2026-03-12T11:02:13Z
+updated_at: 2026-11-26T10:52:08Z
 ---
 
 Changes to terminal pane behavior:
@@ -23,3 +23,9 @@ Currently the terminal initializes immediately when the component mounts, and vi
 - **+layout.svelte**: Removed `showTerminal` initialization from load data.
 - **PlanningView.svelte**: Changed `{#if ui.showTerminal}` to `{#if ui.terminalInitialized}` so the component stays mounted after first show.
 - **WorkspaceView.svelte**: Same change as PlanningView.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

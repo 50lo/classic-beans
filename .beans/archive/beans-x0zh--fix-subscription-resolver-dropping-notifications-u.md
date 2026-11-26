@@ -1,11 +1,11 @@
 ---
 # beans-x0zh
 title: Fix subscription resolver dropping notifications under backpressure
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-21T08:16:46Z
-updated_at: 2026-03-21T08:21:04Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 The AgentSessionChanged and ActiveAgentStatuses subscription resolvers block on sending to the out channel. While blocked, new notifications on the buffer-1 ch channel are silently dropped. This can cause the frontend to miss entire RUNNING status transitions, resulting in the agent working indicator disappearing while the agent is still active. Fix by using a latest-value pattern that refreshes pending state when new notifications arrive during a blocked send.
@@ -17,3 +17,9 @@ Changed the AgentSessionChanged and ActiveAgentStatuses subscription resolvers f
 - Modified AgentSessionChanged resolver in schema.resolvers.go
 - Modified ActiveAgentStatuses resolver in schema.resolvers.go
 - Added test TestAgentSessionSubscription_DeliversLatestState
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

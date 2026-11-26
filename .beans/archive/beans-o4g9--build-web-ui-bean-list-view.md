@@ -1,11 +1,11 @@
 ---
 # beans-o4g9
 title: 'Build web UI: Bean list view'
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2025-12-18T16:45:29Z
-updated_at: 2026-03-09T20:28:02Z
+updated_at: 2026-11-26T10:52:04Z
 order: V1y
 parent: beans-lbjp
 ---
@@ -32,3 +32,9 @@ Implement the main bean listing interface in SvelteKit.
 ## Summary of Changes
 
 Bean list view was implemented across multiple components: BeanItem, BeanCard, BeanPane, BoardView, with filtering, sorting, keyboard navigation, and live GraphQL subscriptions. Task list was not kept current but all functionality is shipped.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

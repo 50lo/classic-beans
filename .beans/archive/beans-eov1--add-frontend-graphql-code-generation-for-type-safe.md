@@ -1,11 +1,11 @@
 ---
 # beans-eov1
 title: Add frontend GraphQL code generation for type safety
-status: completed
+status: scrapped
 type: feature
 priority: low
 created_at: 2026-03-14T15:07:02Z
-updated_at: 2026-03-14T17:06:44Z
+updated_at: 2026-11-26T10:52:08Z
 parent: beans-5txp
 ---
 
@@ -49,3 +49,9 @@ Key design decisions:
 - Used urql's own `TypedDocumentNode` type (via `import type from 'urql'`) instead of `@graphql-typed-document-node/core` which has `"main": ""` breaking Vite's module resolution
 - Generated file is committed (matching the backend's `generated.go` convention) so builds work without running codegen
 - Hand-written interfaces replaced with re-exports from generated types (e.g., `export type Bean = BeanFieldsFragment`)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

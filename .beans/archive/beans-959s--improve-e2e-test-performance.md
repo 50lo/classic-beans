@@ -1,11 +1,11 @@
 ---
 # beans-959s
 title: Improve E2E test performance
-status: completed
+status: scrapped
 type: task
 priority: low
 created_at: 2026-03-14T15:07:02Z
-updated_at: 2026-03-14T16:41:58Z
+updated_at: 2026-11-26T10:52:08Z
 parent: beans-5txp
 ---
 
@@ -30,3 +30,9 @@ Optimized E2E test performance with three improvements:
 - Faster `waitForServer`: TCP connect probe before HTTP fetch, reduced polling intervals (25ms/50ms vs 100ms)
 - Shared `GIT_ENV` constant: deduplicated git environment config
 - Enabled `fullyParallel: true` in Playwright config
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

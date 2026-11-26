@@ -1,11 +1,11 @@
 ---
 # beans-mz4a
 title: Auto-generate workspace description after first agent message
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-13T17:57:43Z
-updated_at: 2026-03-13T18:05:10Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 After the first agent message in a workspace, fire off a lightweight Claude CLI call (claude --print -m haiku) to generate a brief summary of what the workspace is about. Store it as a Description field on the worktree metadata and expose it via GraphQL/subscriptions so the UI can display it.
@@ -43,3 +43,9 @@ Added auto-generated workspace descriptions. After an agent completes its first 
 **Tests:**
 - `internal/agent/describe_test.go` — Tests for first-response callback firing/not-firing
 - `internal/worktree/worktree_test.go` — Test for `UpdateDescription` with notification and persistence
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

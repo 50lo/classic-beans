@@ -1,11 +1,11 @@
 ---
 # beans-vsfv
 title: Add fractional indexing for manual bean ordering
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-07T23:02:43Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: V1y
 ---
 
@@ -32,3 +32,9 @@ Implemented fractional indexing for manual bean ordering:
 - GraphQL schema updated with `order` field on Bean type and UpdateBeanInput
 - Frontend `fractional.ts` — TypeScript port of the algorithm
 - BoardView supports drag-and-drop reordering within and across columns with drop position indicators
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

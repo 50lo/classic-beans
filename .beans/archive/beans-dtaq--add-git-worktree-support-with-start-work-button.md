@@ -1,11 +1,11 @@
 ---
 # beans-dtaq
 title: Add git worktree support with Start Work button
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-07T22:46:39Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: V1z
 ---
 
@@ -33,3 +33,9 @@ Implemented full git worktree support:
 - Worktree tabs in nav bar linking to /worktree/[id] route
 - Blank worktree page with bean detail pane
 - SPA fallback in adapter-static config
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

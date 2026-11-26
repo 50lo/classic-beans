@@ -1,11 +1,11 @@
 ---
 # beans-36gu
 title: Remove git worktree prune from worktree deletion
-status: completed
+status: scrapped
 type: bug
 priority: high
 created_at: 2026-03-12T08:17:34Z
-updated_at: 2026-03-12T08:18:58Z
+updated_at: 2026-11-26T10:52:05Z
 ---
 
 When deleting a worktree through the sidebar, `git worktree prune` can remove more than just the targeted worktree. The `Remove()` method in `internal/worktree/worktree.go` has two fallback paths that run `git worktree prune`, which is a global operation that removes ALL stale worktree entries — not just the one being deleted. This means if any other worktrees had missing directories, they'd get silently cleaned up too.
@@ -23,3 +23,9 @@ When deleting a worktree through the sidebar, `git worktree prune` can remove mo
 - When `git worktree remove` fails (e.g. stale directory), the error is propagated instead of falling back to prune
 - Updated `TestRemoveStaleWorktree` to expect an error for stale worktrees
 - Added `TestRemoveNonexistent` to verify error on unknown worktree IDs
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

@@ -1,11 +1,11 @@
 ---
 # beans-ycov
 title: URL-based routing for UI sections
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T17:38:53Z
-updated_at: 2026-03-11T18:02:28Z
+updated_at: 2026-11-26T10:52:03Z
 order: "7"
 ---
 
@@ -31,3 +31,9 @@ URL scheme:
 - [x] Verify `?bean=<id>` deep linking still works
 - [x] Update e2e tests if needed (all 24 pass without changes)
 - [x] Run build and verify no warnings
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

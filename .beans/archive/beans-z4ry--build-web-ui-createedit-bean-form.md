@@ -1,11 +1,11 @@
 ---
 # beans-z4ry
 title: 'Build web UI: Create/edit bean form'
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2025-12-18T16:45:45Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: zk
 parent: beans-lbjp
 ---
@@ -47,3 +47,9 @@ Implemented BeanForm component (create + edit) as a DaisyUI modal dialog:
 - "+ New Bean" button in the tab bar
 
 Deferred: Blocking beans multi-select (would benefit from a proper multi-select component).
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

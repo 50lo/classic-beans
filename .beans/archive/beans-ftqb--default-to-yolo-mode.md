@@ -1,11 +1,11 @@
 ---
 # beans-ftqb
 title: Default to yolo mode
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T12:03:01Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzw
 ---
 
@@ -27,3 +27,9 @@ Currently, agent chat sessions start in **act mode** (`--permission-mode acceptE
 ## Summary of Changes
 
 New agent sessions now default to yolo mode (--dangerously-skip-permissions) instead of act mode. Set YoloMode=true in both session creation paths (loadOrCreateSession and GetSession). Updated tests to reflect the new default. Filed beans-xfup as follow-up for a project-level setting to make this configurable.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

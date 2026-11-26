@@ -1,11 +1,11 @@
 ---
 # beans-zrn7
 title: Forge abstraction + GitHub PR integration
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-17T13:41:58Z
-updated_at: 2026-03-17T13:49:07Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Add a forge provider abstraction (pkg/forge/) with GitHub implementation via gh CLI. Add Create PR / Update PR agent action button next to Integrate. Auto-detect existing PRs for worktree branches.
@@ -35,3 +35,9 @@ Key components:
 - **Frontend** — Styled the PR button with accent color and a code-branch icon in AgentActions.svelte
 
 The GitLab provider can be added later by implementing the same `forge.Provider` interface with a `glab` CLI backend.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

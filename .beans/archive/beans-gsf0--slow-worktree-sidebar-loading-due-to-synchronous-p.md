@@ -1,11 +1,11 @@
 ---
 # beans-gsf0
 title: Slow worktree sidebar loading due to synchronous PR lookups
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-17T18:04:59Z
-updated_at: 2026-03-17T18:07:26Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 The WorktreesChanged subscription resolver calls populatePR() synchronously for every worktree before emitting. Each populatePR runs 2-3 gh CLI subprocesses hitting the GitHub API. This blocks the initial emission, causing the sidebar to take seconds to appear.
@@ -26,3 +26,9 @@ Refactored the `WorktreesChanged` subscription resolver in `internal/graph/schem
 - **Parallelize PR lookups** — all worktrees' PR data is fetched concurrently using goroutines instead of sequentially
 
 This eliminates the blocking `gh` CLI calls (2-3 per worktree, each hitting GitHub API) from the critical path of the initial subscription emission.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

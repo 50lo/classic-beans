@@ -1,11 +1,11 @@
 ---
 # beans-f05i
 title: Show PR status icons on workspace cards in sidebar
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-17T18:18:15Z
-updated_at: 2026-03-17T18:19:28Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 In integrate: pr mode, replace the green checkmark on workspace cards with PR status icons: no PR = no icon, checks pending = orange, checks failed = red, checks passed = green, merged = purple.
@@ -24,3 +24,9 @@ Modified `frontend/src/lib/components/Sidebar.svelte` to show PR status icons on
 - Icons are clickable links to the PR URL
 - On hover, the destroy button still appears (same pattern as the existing checkmark)
 - In `integrate: local` mode, behavior is completely unchanged
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

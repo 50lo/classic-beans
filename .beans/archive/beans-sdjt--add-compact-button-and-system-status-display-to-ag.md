@@ -1,11 +1,11 @@
 ---
 # beans-sdjt
 title: Add Compact button and system status display to agent chat
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T08:48:48Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzk
 ---
 
@@ -29,3 +29,9 @@ Added Compact button (sends /compact to Claude Code), system status display (sho
 ### Rules Updates
 - Added GraphQL subscription nil-handling rule to CLAUDE.md
 - Added agent chat e2e testing strategy to frontend rules
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

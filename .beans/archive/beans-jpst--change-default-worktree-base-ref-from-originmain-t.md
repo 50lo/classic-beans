@@ -1,11 +1,11 @@
 ---
 # beans-jpst
 title: Change default worktree base_ref from origin/main to main
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-11T17:54:24Z
-updated_at: 2026-03-11T18:02:28Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzz
 ---
 
@@ -14,3 +14,9 @@ The default base ref for worktree creation is currently `origin/main`. It should
 ## Summary of Changes
 
 Changed the default worktree base_ref from `origin/main` to `main` across the codebase: the `DefaultWorktreeBaseRef` constant, `.beans.yml` config, and all related doc comments.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

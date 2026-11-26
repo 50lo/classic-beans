@@ -1,11 +1,11 @@
 ---
 # beans-t7um
 title: Visualize subagent activity in chat UI
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T10:19:14Z
-updated_at: 2026-03-11T16:46:51Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzk
 ---
 
@@ -37,3 +37,9 @@ Implemented real-time subagent activity visualization in the chat UI.
 - Updated parse_test.go expectations for session_id propagation
 - Added test cases for thinking_delta and signature_delta (ignored)
 - All 21 e2e tests pass, all Go tests pass
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

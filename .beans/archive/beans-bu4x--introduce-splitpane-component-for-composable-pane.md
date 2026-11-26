@@ -1,11 +1,11 @@
 ---
 # beans-bu4x
 title: Introduce SplitPane component for composable pane architecture
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-09T08:47:17Z
-updated_at: 2026-03-09T17:01:28Z
+updated_at: 2026-11-26T10:52:04Z
 order: s
 ---
 
@@ -44,3 +44,9 @@ Extract duplicated split layout logic from backlog, board, and worktree views in
 - Added green border-l-success indicator on beans with active worktrees (both list and board)
 - Deleted /board and /worktree routes, consolidated to /
 - Updated E2E board-page.ts to use toggle button instead of /board navigation
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

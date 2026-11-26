@@ -1,11 +1,11 @@
 ---
 # beans-9744
 title: Rename createWorktree/removeWorktree to startWork/stopWork
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T17:10:03Z
-updated_at: 2026-03-10T19:31:46Z
+updated_at: 2026-11-26T10:52:04Z
 order: w
 ---
 
@@ -40,3 +40,9 @@ Refactor the worktree-related GraphQL mutations:
 - Branch/path were already derived automatically from bean ID
 - Worktree creation already errored on duplicates via the worktree manager
 - All tests pass (21 e2e + all Go unit tests)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

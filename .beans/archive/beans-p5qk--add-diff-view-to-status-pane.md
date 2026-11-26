@@ -1,11 +1,11 @@
 ---
 # beans-p5qk
 title: Add diff view to status pane
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T22:11:34Z
-updated_at: 2026-03-11T22:15:55Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 When a file is clicked in the ChangesPane file list, show its diff in the bottom half of the pane.
@@ -26,3 +26,9 @@ When a file is clicked in the ChangesPane file list, show its diff in the bottom
 - Diff lines are color-coded: green for additions, red for deletions, accent for hunk headers
 - Added `.diff-add`, `.diff-del`, `.diff-hunk` utility classes to `layout.css`
 - Selection auto-clears when the file disappears from the changes list (e.g., after a commit)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

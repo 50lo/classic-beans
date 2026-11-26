@@ -1,11 +1,11 @@
 ---
 # beans-fsb0
 title: Include workspace context in quick reply prompt
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-18T09:40:19Z
-updated_at: 2026-03-18T09:43:07Z
+updated_at: 2026-11-26T10:52:08Z
 parent: beans-2bbc
 ---
 
@@ -22,3 +22,9 @@ The Haiku prompt for generating quick reply suggestions should include workspace
 - `internal/agent/manager.go` — new `QuickReplyContextFunc` type and `SetQuickReplyContext` method
 - `internal/agent/quickreplies.go` — updated prompt and `GenerateQuickReplies` signature
 - `internal/commands/serve.go` — workspace context provider registration
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

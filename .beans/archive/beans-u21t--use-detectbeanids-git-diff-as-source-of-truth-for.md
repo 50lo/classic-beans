@@ -1,11 +1,11 @@
 ---
 # beans-u21t
 title: Use DetectBeanIDs (git diff) as source of truth for worktree bean association in UI
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-14T17:11:11Z
-updated_at: 2026-03-14T18:06:34Z
+updated_at: 2026-11-26T10:52:08Z
 ---
 
 Replace the file-watcher-based worktreeLinks mechanism (System A) with the git-diff-based DetectBeanIDs mechanism (System B) for determining which beans belong to which worktree in the frontend UI.
@@ -26,3 +26,9 @@ Switched the frontend from using `bean.worktreeId` (populated by the file-watche
 - `frontend/src/lib/components/Sidebar.svelte` — Uses worktree `beanIds` to look up beans instead of filtering by `bean.worktreeId`
 - `frontend/src/lib/components/BeanCard.svelte` — Uses `worktreeStore.worktreeForBean()` instead of `bean.worktreeId`
 - `frontend/src/lib/components/BeanPane.svelte` — Uses `worktreeStore.worktreeForBean()` instead of `bean.worktreeId`
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

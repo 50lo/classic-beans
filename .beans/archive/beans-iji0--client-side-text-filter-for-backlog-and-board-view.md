@@ -1,11 +1,11 @@
 ---
 # beans-iji0
 title: Client-side text filter for backlog and board views
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T09:03:09Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzs
 ---
 
@@ -43,3 +43,9 @@ Implemented client-side text filtering for backlog and board views:
 - Cmd/Ctrl+F keyboard shortcut focuses the filter input
 - Filter state shared between backlog and board views
 - 8 e2e tests covering all scenarios
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

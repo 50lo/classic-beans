@@ -1,11 +1,11 @@
 ---
 # beans-rvfe
 title: Extract core GraphQL into pkg/beangraph
-status: completed
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-03-21T08:11:51Z
-updated_at: 2026-03-21T08:24:36Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Split the GraphQL layer: core bean CRUD into pkg/beangraph/ (public), UI-specific resolvers stay in internal/graph/. Move model types to pkg/beangraph/model/. CLI commands switch to using CoreResolver directly, dropping internal/graph dependency.
@@ -35,3 +35,9 @@ Split the GraphQL layer: core bean CRUD into pkg/beangraph/ (public), UI-specifi
 - TUI also migrated to use `beangraph.CoreResolver` directly
 - Only `graphql.go` and `serve.go` still import `internal/graph` (expected — they need the full gqlgen schema)
 - All 16 test packages pass, codegen works
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

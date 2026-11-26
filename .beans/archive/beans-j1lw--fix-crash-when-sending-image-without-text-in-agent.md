@@ -1,11 +1,11 @@
 ---
 # beans-j1lw
 title: Fix crash when sending image without text in agent chat
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-20T14:11:55Z
-updated_at: 2026-03-20T14:13:41Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 Sending an image with no text creates an empty text content block ({"type": "text", "text": ""}), which the Anthropic API rejects with 'messages: text content blocks must be non-empty'. This can destroy an entire conversation.
@@ -17,3 +17,9 @@ Fixed a bug where sending an image with no text in agent chat would create an em
 **Files changed:**
 - `internal/agent/claude.go` — Skip empty text block in `sendToProcess` when message is empty
 - `internal/agent/claude_test.go` — Added two tests: image-only (no empty text block) and image-with-text (both blocks present)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

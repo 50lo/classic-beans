@@ -1,11 +1,11 @@
 ---
 # beans-kjn2
 title: Create standalone worktrees from web UI
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-11T21:48:26Z
-updated_at: 2026-03-11T21:59:46Z
+updated_at: 2026-11-26T10:52:07Z
 ---
 
 Allow creating new worktrees from the beans-serve web UI that aren't attached to a specific bean. Currently worktrees are created via the startWork mutation which requires a beanId. This feature adds the ability to create ad-hoc worktrees for exploratory work, prototyping, or tasks that don't have a corresponding bean.
@@ -37,3 +37,9 @@ Key changes:
 - [ ] Update sidebar to display standalone worktrees
 - [ ] Write/update tests
 - [ ] Verify build and e2e tests pass
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

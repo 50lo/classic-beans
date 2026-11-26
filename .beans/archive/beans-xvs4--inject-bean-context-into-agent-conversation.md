@@ -1,11 +1,11 @@
 ---
 # beans-xvs4
 title: Inject bean context into agent conversation
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T12:14:45Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzy
 ---
 
@@ -25,3 +25,9 @@ Automatically inject bean context (title, type, status, body) into the Claude Co
 - `internal/commands/serve.go`
 - `internal/agent/manager_test.go`
 - `internal/agent/store_test.go`
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

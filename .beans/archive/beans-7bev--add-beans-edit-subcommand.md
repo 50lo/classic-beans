@@ -1,11 +1,11 @@
 ---
 # beans-7bev
 title: Add beans edit subcommand
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-05-05T07:06:18Z
-updated_at: 2026-05-05T07:07:53Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 Add a `beans edit <bean-id>` subcommand that opens the bean's markdown file in the user's editor. Editor resolution: $EDITOR > $VISUAL > nano.
@@ -18,3 +18,9 @@ Add a `beans edit <bean-id>` subcommand that opens the bean's markdown file in t
 - Registered in `internal/commands/register.go`
 - Tests in `internal/commands/edit_test.go` covering editor resolution and argument validation
 - Refs: beans-7bev
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

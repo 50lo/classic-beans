@@ -1,11 +1,11 @@
 ---
 # beans-2e6i
 title: Sanitize markdown HTML output with DOMPurify
-status: completed
+status: scrapped
 type: task
 priority: high
 created_at: 2026-03-09T17:01:34Z
-updated_at: 2026-03-11T14:40:15Z
+updated_at: 2026-11-26T10:52:04Z
 order: zzV
 parent: beans-oe8n
 ---
@@ -18,3 +18,9 @@ Both BeanDetail.svelte (line 256) and AgentChat.svelte (line 122) render user/ag
 - Integrated DOMPurify.sanitize() into renderMarkdown() to sanitize all HTML output before it reaches {@html} directives
 - Configured ADD_ATTR for 'data-bean-id' to preserve bean link functionality
 - Sanitization only runs in browser context (consistent with Shiki highlighting pattern)
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

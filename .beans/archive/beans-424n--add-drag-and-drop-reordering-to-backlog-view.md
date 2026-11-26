@@ -1,11 +1,11 @@
 ---
 # beans-424n
 title: Add drag-and-drop reordering to backlog view
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-09T17:08:28Z
-updated_at: 2026-03-09T17:35:58Z
+updated_at: 2026-11-26T10:52:04Z
 order: zzz
 ---
 
@@ -24,3 +24,9 @@ Make beans in the backlog view draggable for manual reordering, reusing the same
 - Added `applyReparent` to `dragOrder.ts` with cycle detection
 - Ring highlight visual feedback on reparent target
 - E2e test for drag-to-reparent
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

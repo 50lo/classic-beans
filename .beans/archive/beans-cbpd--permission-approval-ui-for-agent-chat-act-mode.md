@@ -1,11 +1,11 @@
 ---
 # beans-cbpd
 title: Permission approval UI for agent chat (act mode)
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-10T10:37:28Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:05Z
 order: zzzzz
 ---
 
@@ -35,3 +35,9 @@ Implement PermissionRequest hook-based permission approval in the web UI, enabli
 ### Tests
 - Added unit tests for `SetPermissionRequest`, `ResolvePermission` (success, no session, no pending), and `buildClaudeArgs` act mode behavior
 - Updated all existing tests for `ManagerConfig` signature change
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

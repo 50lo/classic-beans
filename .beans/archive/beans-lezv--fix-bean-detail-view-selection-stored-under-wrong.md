@@ -1,11 +1,11 @@
 ---
 # beans-lezv
 title: Fix bean detail view selection stored under wrong workspace key
-status: completed
+status: scrapped
 type: bug
 priority: normal
 created_at: 2026-03-14T09:25:29Z
-updated_at: 2026-03-14T09:26:14Z
+updated_at: 2026-11-26T10:52:06Z
 ---
 
 When clicking a bean in the sidebar under a workspace you're not currently viewing, the selection gets stored under the current view's key instead of the target workspace's key. This causes the bean detail pane to be empty after navigation.
@@ -22,3 +22,9 @@ Fixed a race condition in `Sidebar.svelte` where clicking a bean listed under a 
 
 - Added `selectBeanForView(beanId, view)` method to `UIState` that stores a bean selection directly under a specific view's key
 - Updated `Sidebar.svelte` to call `selectBeanForView` before `navigateTo`, so the selection is in the correct slot when `syncFromUrl` fires after navigation
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

@@ -1,13 +1,13 @@
 ---
 # beans-lbjp
 title: beans web - Web UI server
-status: completed
+status: scrapped
 type: feature
 priority: normal
 tags:
     - idea
 created_at: 2025-12-08T17:11:36Z
-updated_at: 2026-03-10T15:44:18Z
+updated_at: 2026-11-26T10:52:03Z
 order: V0g
 parent: beans-f11p
 ---
@@ -35,3 +35,9 @@ Add a `beans serve` command that starts a webserver providing:
 ## Summary of Changes
 
 All subtasks completed: SvelteKit SPA with bean list, detail, and create/edit views; GraphQL HTTP endpoint with subscriptions; static assets embedded in Go binary; beans serve command with --dev mode. The web UI is fully functional.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.

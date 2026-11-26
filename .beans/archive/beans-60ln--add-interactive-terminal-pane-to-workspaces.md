@@ -1,11 +1,11 @@
 ---
 # beans-60ln
 title: Add interactive terminal pane to workspaces
-status: completed
+status: scrapped
 type: feature
 priority: normal
 created_at: 2026-03-12T07:23:31Z
-updated_at: 2026-03-12T07:33:29Z
+updated_at: 2026-11-26T10:52:04Z
 order: zz
 ---
 
@@ -39,3 +39,9 @@ Add a toggleable terminal pane (interactive PTY) to both worktree and main works
 
 ### Tests
 - Unit tests for terminal manager: create, close, replace, resize, I/O, shutdown.
+
+
+
+## Reasons for Scrapping
+
+Out of scope for the Classic Beans backlog, which now tracks the Workflow CLI commands epic (`beans-mmyp`) and its descendants. This item was previously marked completed.
